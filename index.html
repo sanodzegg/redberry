@@ -8,12 +8,46 @@
     <title>Document</title>
 
     <!-- scripts -->
-    
+    <script src="./js/index.js"></script>
 
     <!-- styles -->
     <link rel="stylesheet" href="./css/global.css">
 </head>
 <body>
-    
+    <section class="home-view" role="display welcoming message to the visitors">
+        <h1>Welcome Rocketeer!</h1>
+        <div class="nav">
+            <button id="start">Start Questionnaire</button>
+            <button id="submitted">Submitted Applications</button>
+        </div>
+        <img src="./media/png/rocketman.png" alt="rocketman sticker">
+    </section>
+    <section class="form-section" role="display fillable form">
+        <div class="form-display">
+            <h1>Hey, Rocketeer, what are your coordinates?</h1>
+            <form name="general">
+                <input type="text" id="fname" placeholder="First Name">
+                <input type="text" id="lname" placeholder="Last Name">
+                <input type="email" id="email" placeholder="E Mail">
+                <div id="number">
+                    <span>+955</span>
+                    <input type="text" name="pn" id="test"placeholder="5__ __ __ __" maxlength="11">
+                </div>
+            </form>
+            <div class="pagination-parent">
+                <img id="prev" src="./media/svg/Previous.svg" alt="previous form">
+                <div class="page-dot active"></div>
+                <div class="page-dot"></div>
+                <div class="page-dot"></div>
+                <div class="page-dot"></div>
+                <div class="page-dot"></div>
+                <img id="next" src="./media/svg/Previous.svg" alt="next form">
+            </div>
+        </div>
+        <div class="about-display">
+            <h1>Redberry Origins</h1>
+            <p>You watch “What? Where? When?” Yeah. Our founders used to play it. That’s where they got a question about a famous American author and screenwriter Ray Bradbury. Albeit, our CEO Gaga Darsalia forgot the exact name and he answered Ray Redberry. And at that moment, a name for a yet to be born company was inspired - Redberry 😇</p>
+        </div>
+    </section>
 </body>
 </html>

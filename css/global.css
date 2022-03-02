@@ -62,7 +62,6 @@ body {
 
 h1 {
   font-size: 2em;
-  margin: .67em 0;
 }
 
 code,
@@ -295,5 +294,244 @@ textarea,
 
 [hidden][aria-hidden='false']:focus {
   clip: auto;
+}
+
+body {
+  height: 100vh;
+  background-position: center;
+}
+
+.home-view {
+  width: 1090px;
+  max-width: 100%;
+  margin: 0 auto;
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.home-view h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 6rem;
+  color: #FE3B1F;
+  font-family: 'Rowdies', cursive;
+  margin: 10.3rem 0 6.5rem 0;
+}
+
+.home-view .nav {
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.home-view .nav button {
+  cursor: pointer;
+}
+
+.home-view .nav button:nth-child(1) {
+  background-color: #FE3B1F;
+  width: 24.6rem;
+  height: 4.9rem;
+  border-radius: 3.125rem;
+  font-size: 1.5rem;
+  line-height: 1.83rem;
+  color: #FFF;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.home-view .nav button:nth-child(2) {
+  background-color: transparent;
+  font-size: 24px;
+  line-height: 1.83rem;
+  color: #FFF;
+  font-family: 'Montserrat', sans-serif;
+  border-bottom: #FFF solid 2px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 0;
+  margin: 1.125rem 0;
+}
+
+.home-view img {
+  width: 37.525%;
+  min-width: 25.577rem;
+}
+
+.form-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.form-section .form-display {
+  width: 50%;
+}
+
+.form-section .form-display h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 4rem;
+  line-height: 4.5rem;
+  color: #FE3B1F;
+  font-family: 'Rowdies', cursive;
+  margin: 6.6rem 6.5rem;
+}
+
+.form-section .form-display form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  max-width: 455px;
+  margin: 0 auto;
+}
+
+.form-section .form-display form input {
+  width: 455px;
+  max-width: 100%;
+  border: 1px #525557 solid;
+  padding: 1rem 12.6rem .8rem 3.5rem;
+  margin: 1.5rem 0;
+}
+
+.form-section .form-display form #number {
+  width: 455px;
+  max-width: 100%;
+  position: relative;
+}
+
+.form-section .form-display form #number input {
+  border: 1px #525557 solid;
+  padding: 1rem 12.6rem .8rem 3.5rem;
+  margin: 1.5rem 0;
+}
+
+.form-section .form-display form #number span {
+  position: absolute;
+  top: 53.5%;
+  left: 3%;
+  -webkit-transform: translate(-3%, -53.5%);
+          transform: translate(-3%, -53.5%);
+}
+
+.form-section .form-display form ::-webkit-input-placeholder {
+  font-family: 'Montserrat', sans-serif;
+  color: #454545;
+  font-style: italic;
+  opacity: 1;
+}
+
+.form-section .form-display form :-ms-input-placeholder {
+  font-family: 'Montserrat', sans-serif;
+  color: #454545;
+  font-style: italic;
+  opacity: 1;
+}
+
+.form-section .form-display form ::-ms-input-placeholder {
+  font-family: 'Montserrat', sans-serif;
+  color: #454545;
+  font-style: italic;
+  opacity: 1;
+}
+
+.form-section .form-display form ::placeholder {
+  font-family: 'Montserrat', sans-serif;
+  color: #454545;
+  font-style: italic;
+  opacity: 1;
+}
+
+.form-section .form-display form input::-webkit-outer-spin-button,
+.form-section .form-display form input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-section .form-display .pagination-parent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 9.4rem auto 0 auto;
+  width: 230px;
+}
+
+.form-section .form-display .pagination-parent .page-dot {
+  cursor: pointer;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  opacity: .1;
+  margin: 0 7.5px;
+  background-color: #FE3B1F;
+}
+
+.form-section .form-display .pagination-parent .active {
+  background-color: #FE3B1F;
+  opacity: 1;
+}
+
+.form-section .form-display .pagination-parent #prev {
+  margin-right: 10.5px;
+}
+
+.form-section .form-display .pagination-parent #next {
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+  margin-left: 10.5px;
+}
+
+.form-section .about-display {
+  width: 50%;
+  height: 100vh;
+  background: radial-gradient(50% 50% at 50% 50%, #0C0D0E 0%, #151718 73.44%);
+}
+
+.form-section .about-display h1 {
+  margin: 0;
+  text-align: left;
+  font-size: 4rem;
+  line-height: 4.5rem;
+  color: #FE3B1F;
+  font-family: 'Rowdies', cursive;
+  margin: 8.2rem auto;
+  max-width: 705px;
+}
+
+.form-section .about-display p {
+  margin: 0 auto;
+  font-size: 1.5rem;
+  line-height: 3rem;
+  color: #FFF;
+  font-family: 'Montserrat', sans-serif;
+  max-width: 705px;
 }
 /*# sourceMappingURL=global.css.map */

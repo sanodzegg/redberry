@@ -1,1 +1,167 @@
 @import "./keyframes"; 
+@import "./variables";
+
+body {
+    height: 100vh;
+    // background: url(../media/png/stars.png), $primary-bg;
+    background-position: center;
+}
+
+.home-view {
+    width: 1090px;
+    max-width: 100%;
+    margin: 0 auto;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+        margin: 0;
+        text-align: center;
+        font-size: 6rem;
+        color: $redberry-red;
+        font-family: 'Rowdies', cursive;
+        margin: 10.3rem 0 6.5rem 0;
+    }
+    .nav {
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        button {
+            cursor: pointer;
+        }
+        button:nth-child(1){
+            background-color: $redberry-red;
+            width: 24.6rem;
+            height: 4.9rem;
+            border-radius: 3.125rem;
+            font-size: 1.5rem;
+            line-height: 1.83rem;
+            color: $primary-white;
+            font-family: 'Montserrat', sans-serif;
+        }
+        button:nth-child(2){
+            background-color: transparent;
+            font-size: 24px;
+            line-height: 1.83rem;
+            color: $primary-white;
+            font-family: 'Montserrat', sans-serif;
+            border-bottom: $primary-white solid 2px;
+            width: max-content;
+            padding: 0;
+            margin: 1.125rem 0;
+        }
+    }
+    img {
+        width: 37.525%;
+        min-width: 25.577rem;
+    }
+}
+
+.form-section {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    .form-display {
+        width: 50%;
+        h1 {
+            margin: 0;
+            text-align: center;
+            font-size: 4rem;
+            line-height: 4.5rem;
+            color: $redberry-red;
+            font-family: 'Rowdies', cursive;
+            margin: 6.6rem 6.5rem;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 455px;
+            margin: 0 auto;
+            input {
+                width: 455px;
+                max-width: 100%;
+                border: 1px $primary-stroke solid;
+                padding: 1rem 12.6rem .8rem 3.5rem;
+                margin: 1.5rem 0;
+            }
+            #number {
+                width: 455px;
+                max-width: 100%;
+                position: relative;
+                input {
+                    border: 1px $primary-stroke solid;
+                    padding: 1rem 12.6rem .8rem 3.5rem;
+                    margin: 1.5rem 0;
+                }
+                span {
+                    position: absolute;
+                    top: 53.5%;
+                    left: 3%;
+                    transform: translate(-3%, -53.5%);
+                }
+            }
+            ::placeholder { 
+                font-family: 'Montserrat', sans-serif;
+                color: $primary-grey;
+                font-style: italic;
+                opacity: 1; 
+            }
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        }
+        .pagination-parent {
+            display: flex;
+            align-items: center;
+            margin: 9.4rem auto 0 auto;
+            width: 230px;
+            .page-dot {
+                cursor: pointer;
+                width: 19px;
+                height: 19px;
+                border-radius: 50%;
+                opacity: .1;
+                margin: 0 7.5px;
+                background-color: $redberry-red;
+            }
+            .active {
+                background-color: $redberry-red;
+                opacity: 1;
+            }
+            #prev {
+                margin-right: 10.5px;
+            }
+            #next {
+                transform: scaleX(-1);
+                margin-left: 10.5px;
+            }
+        }
+    }
+    .about-display {
+        width: 50%;
+        height: 100vh;
+        background: $primary-bg;
+        h1 {
+            margin: 0;
+            text-align: left;
+            font-size: 4rem;
+            line-height: 4.5rem;
+            color: $redberry-red;
+            font-family: 'Rowdies', cursive;
+            margin: 8.2rem auto;
+            max-width: 705px;
+        }
+        p {
+            margin: 0 auto;
+            font-size: 1.5rem;
+            line-height: 3rem;
+            color: $primary-white;
+            font-family: 'Montserrat', sans-serif;
+            max-width: 705px;
+        }
+    }
+}
