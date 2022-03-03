@@ -22,31 +22,155 @@
         </div>
         <img src="./media/png/rocketman.png" alt="rocketman sticker">
     </section>
-    <section class="form-section" role="display fillable form">
-        <div class="form-display">
-            <h1>Hey, Rocketeer, what are your coordinates?</h1>
-            <form name="general">
-                <input type="text" id="fname" placeholder="First Name">
-                <input type="text" id="lname" placeholder="Last Name">
-                <input type="email" id="email" placeholder="E Mail">
-                <div id="number">
-                    <span>+955</span>
-                    <input type="text" name="pn" id="test"placeholder="5__ __ __ __" maxlength="11">
+    <section class="form-section hidden" role="display fillable form">
+        <div class="form-wrapper">
+            <div class="form-display">
+                <div class="form-box hidden">
+                    <h1>Hey, Rocketeer, what are your coordinates?</h1>
+                    <form name="general">
+                        <input type="text" id="fname" placeholder="First Name">
+                        <input type="text" id="lname" placeholder="Last Name">
+                        <input type="email" id="email" placeholder="E Mail">
+                        <div id="number">
+                            <span>+955</span>
+                            <input type="text" name="pn" id="number"placeholder="5__ __ __ __" maxlength="11">
+                        </div>
+                    </form>
                 </div>
-            </form>
-            <div class="pagination-parent">
-                <img id="prev" src="./media/svg/Previous.svg" alt="previous form">
-                <div class="page-dot active"></div>
-                <div class="page-dot"></div>
-                <div class="page-dot"></div>
-                <div class="page-dot"></div>
-                <div class="page-dot"></div>
-                <img id="next" src="./media/svg/Previous.svg" alt="next form">
+                <div class="form-box hidden">
+                    <h1>Tell us about your skills</h1>
+                    <form name="general" class="skill-select">
+                        <select name="skill-select" id="skills">
+                            <option value="default" disabled selected>Skills</option>
+                            <option value="test1">test1</option>
+                            <option value="test2">test2</option>
+                        </select>
+                        <input type="number" id="exp" placeholder="Experience Duration in Years">
+                        <button class="default-button" id="toLangList">Add Programming Language</button>
+                    </form>
+                    <div class="langlist-wrapper">
+                        <div class="langlist-box">
+                            <span id="langName">php</span>
+                            <span id="expYears">years of experience: 3</span>
+                            <div id="removeLang">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10C19.9939 15.5203 15.5203 19.9939 10 20ZM2 10.172C2.04732 14.5732 5.64111 18.1095 10.0425 18.086C14.444 18.0622 17.9995 14.4875 17.9995 10.086C17.9995 5.68451 14.444 2.10977 10.0425 2.086C5.64111 2.06246 2.04732 5.59876 2 10V10.172ZM15 11H5V9H15V11Z" fill="#EB3535"/>
+                                </svg>                                
+                            </div>
+                        </div>
+                        <div class="langlist-box">
+                            <span id="langName">php</span>
+                            <span id="expYears">years of experience: 3</span>
+                            <div id="removeLang">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10C19.9939 15.5203 15.5203 19.9939 10 20ZM2 10.172C2.04732 14.5732 5.64111 18.1095 10.0425 18.086C14.444 18.0622 17.9995 14.4875 17.9995 10.086C17.9995 5.68451 14.444 2.10977 10.0425 2.086C5.64111 2.06246 2.04732 5.59876 2 10V10.172ZM15 11H5V9H15V11Z" fill="#EB3535"/>
+                                </svg>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-box hidden">
+                    <h1>Covid Stuff</h1>
+                    <form name="general">
+                        <div class="radio-box">
+                            <p>How would you prefer to work?</p>
+                            <div class="radio-button">
+                                <input type="radio" name="location" value="office">
+                                <label for="location">From Sairme Office</label>
+                            </div>
+                            <div class="radio-button">
+                                <input type="radio" name="location" value="home">
+                                <label for="location">From Home</label>
+                            </div>
+                            <div class="radio-button">
+                                <input type="radio" name="location" value="hybrid">
+                                <label for="location">Hybrid</label>
+                            </div>
+                        </div>
+                        <div class="radio-box">
+                            <p>Did you contact covid 19? :(</p>
+                            <div class="radio-button">
+                                <input type="radio" name="c19-status" value="yes">
+                                <label for="c19-status">Yes</label>
+                            </div>
+                            <div class="radio-button">
+                                <input type="radio" name="c19-status" value="no">
+                                <label for="c19-status">No</label>
+                            </div>
+                        </div>
+                        <div class="radio-box">
+                            <p>When?</p>
+                            <input id="dateOfC19" placeholder="Date" type="text" onfocus="(this.type='date')">
+                        </div>
+                        <div class="radio-box">
+                            <p>Have you been vaccinated?</p>
+                            <div class="radio-button">
+                                <input type="radio" name="vacc-status" value="yes">
+                                <label for="vacc-status">Yes</label>
+                            </div>
+                            <div class="radio-button">
+                                <input type="radio" name="vacc-status" value="no">
+                                <label for="vacc-status">Yes</label>
+                            </div>
+                        </div>
+                        <div class="radio-box">
+                            <p>When did you get your last covid vaccine?</p>
+                            <input id="dateOfVacc" placeholder="Date" type="text" onfocus="(this.type='date')">
+                        </div>
+                    </form>
+                </div>
+                <div class="form-box hidden">
+                    <h1>What about you?</h1>
+                    <form name="general">
+                        <div class="radio-box">
+                            <p>Would you attend Devtalks and maybe also organize your own?</p>
+                            <div class="radio-button">
+                                <input type="radio" name="devtalks" value="yes">
+                                <label for="devtalks">Yes</label>
+                            </div>
+                            <div class="radio-button">
+                                <input type="radio" name="devtalks" value="no">
+                                <label for="devtalks">No</label>
+                            </div>
+                        </div>
+                        <div class="radio-box">
+                            <label for="devtalk">What would you speak about at Devtalk?</label>
+                            <textarea id="areaDevTalk" name="devtalk" placeholder="I would..."></textarea>
+                        </div>
+                        <div class="radio-box">
+                            <label for="special">Tell us something special</label>
+                            <textarea id="areaSpecial" name="special" placeholder="I..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="pagination-parent">
+                    <img id="prev" src="./media/svg/Previous.svg" alt="previous form">
+                    <div class="page-dot available active"></div>
+                    <div class="page-dot"></div>
+                    <div class="page-dot"></div>
+                    <div class="page-dot"></div>
+                    <div class="page-dot"></div>
+                    <img id="next" src="./media/svg/Previous.svg" alt="next form">
+                </div>
             </div>
-        </div>
-        <div class="about-display">
-            <h1>Redberry Origins</h1>
-            <p>You watch “What? Where? When?” Yeah. Our founders used to play it. That’s where they got a question about a famous American author and screenwriter Ray Bradbury. Albeit, our CEO Gaga Darsalia forgot the exact name and he answered Ray Redberry. And at that moment, a name for a yet to be born company was inspired - Redberry 😇</p>
+            <div class="about-display">
+                <div class="display-wrapper hidden">
+                    <h1>Redberry Origins</h1>
+                    <p>You watch “What? Where? When?” Yeah. Our founders used to play it. That’s where they got a question about a famous American author and screenwriter Ray Bradbury. Albeit, our CEO Gaga Darsalia forgot the exact name and he answered Ray Redberry. And at that moment, a name for a yet to be born company was inspired - Redberry 😇</p>
+                </div>
+                <div class="display-wrapper hidden">
+                    <h1>A bit about our battles</h1>
+                    <p>As we said, Redberry has been on the field for quite some time now, and we have touched and embraced a variety of programming languages, technologies, philosophies, and frameworks. We are battle-tested in PHP Laravel Stack with Vue.js, refined in React, and allies with Serverside technologies like Docker and Kubernetes, and now we have set foot in the web3 industry.</p>
+                </div>
+                <div class="display-wrapper hidden">
+                    <h1>Redberry Covid Policies</h1>
+                    <p>As this infamous pandemic took over the world, we adjusted our working practices so that our employees can be as safe and comfortable as possible. We have a hybrid work environment, so you can either work from home or visit our lovely office on Sairme Street. If it was up to us, we would love you to see us in the office because we think face-to-face communications > Zoom meetings. Both on the fun and productivity scales.</p>
+                </div>
+                <div class="display-wrapper hidden">
+                    <h1>Redberrian Insights</h1>
+                    <p>We were soo much fun before the pandemic started! Parties almost every weekend and lavish employee birthday celebrations! Unfortunately, covid ruined that fun like it did almost everything else in the world. But we try our best to zhuzh it up a bit. For example, we host biweekly Devtalks where our senior and lead developers talk about topics they are passionate about. Previous topics have included Web3, NFT, Laravel 9, Kubernetes, etc. We hold these talks in the office but you can join our Zoom broadcast as well. Feel free to join either as an attendee or a speaker!</p>
+                </div>
+            </div>
         </div>
     </section>
 </body>

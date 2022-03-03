@@ -298,14 +298,21 @@ textarea,
 
 body {
   height: 100vh;
+  background: url(../media/png/stars.png), radial-gradient(50% 50% at 50% 50%, #0C0D0E 0%, #151718 73.44%);
   background-position: center;
+}
+
+.hidden {
+  display: none;
 }
 
 .home-view {
   width: 1090px;
   max-width: 100%;
   margin: 0 auto;
-  display: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -372,7 +379,7 @@ body {
   min-width: 25.577rem;
 }
 
-.form-section {
+.form-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -382,11 +389,11 @@ body {
   width: 100%;
 }
 
-.form-section .form-display {
+.form-wrapper .form-display {
   width: 50%;
 }
 
-.form-section .form-display h1 {
+.form-wrapper .form-display h1 {
   margin: 0;
   text-align: center;
   font-size: 4rem;
@@ -396,7 +403,7 @@ body {
   margin: 6.6rem 6.5rem;
 }
 
-.form-section .form-display form {
+.form-wrapper .form-display form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -411,27 +418,53 @@ body {
   margin: 0 auto;
 }
 
-.form-section .form-display form input {
+.form-wrapper .form-display form #exp {
+  padding: 1rem 10.2rem 0.8rem 3.5rem;
+}
+
+.form-wrapper .form-display form .default-button {
+  font-size: .75rem;
+  line-height: .9rem;
+  font-family: 'Montserrat', sans-serif;
+  padding: .5rem .2rem;
+  color: #FFF;
+  background-color: #FE3B1F;
+}
+
+.form-wrapper .form-display form input {
   width: 455px;
   max-width: 100%;
   border: 1px #525557 solid;
   padding: 1rem 12.6rem .8rem 3.5rem;
-  margin: 1.5rem 0;
+  margin: 1.063rem 0;
 }
 
-.form-section .form-display form #number {
+.form-wrapper .form-display form select {
+  width: 455px;
+  max-width: 100%;
+  border: 1px #525557 solid;
+  padding: 1rem 12.6rem .8rem 3.5rem;
+  margin: 1.063rem 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background: url(../media/svg/Vector.svg) no-repeat 97% 50%;
+  outline: none;
+}
+
+.form-wrapper .form-display form #number {
   width: 455px;
   max-width: 100%;
   position: relative;
 }
 
-.form-section .form-display form #number input {
+.form-wrapper .form-display form #number input {
   border: 1px #525557 solid;
   padding: 1rem 12.6rem .8rem 3.5rem;
   margin: 1.5rem 0;
 }
 
-.form-section .form-display form #number span {
+.form-wrapper .form-display form #number span {
   position: absolute;
   top: 53.5%;
   left: 3%;
@@ -439,41 +472,150 @@ body {
           transform: translate(-3%, -53.5%);
 }
 
-.form-section .form-display form ::-webkit-input-placeholder {
+.form-wrapper .form-display form ::-webkit-input-placeholder {
   font-family: 'Montserrat', sans-serif;
   color: #454545;
   font-style: italic;
   opacity: 1;
 }
 
-.form-section .form-display form :-ms-input-placeholder {
+.form-wrapper .form-display form :-ms-input-placeholder {
   font-family: 'Montserrat', sans-serif;
   color: #454545;
   font-style: italic;
   opacity: 1;
 }
 
-.form-section .form-display form ::-ms-input-placeholder {
+.form-wrapper .form-display form ::-ms-input-placeholder {
   font-family: 'Montserrat', sans-serif;
   color: #454545;
   font-style: italic;
   opacity: 1;
 }
 
-.form-section .form-display form ::placeholder {
+.form-wrapper .form-display form ::placeholder {
   font-family: 'Montserrat', sans-serif;
   color: #454545;
   font-style: italic;
   opacity: 1;
 }
 
-.form-section .form-display form input::-webkit-outer-spin-button,
-.form-section .form-display form input::-webkit-inner-spin-button {
+.form-wrapper .form-display form input::-webkit-outer-spin-button,
+.form-wrapper .form-display form input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.form-section .form-display .pagination-parent {
+.form-wrapper .form-display form .radio-box {
+  font-family: 'Montserrat', sans-serif;
+  color: #000;
+  margin-top: 1.28rem;
+}
+
+.form-wrapper .form-display form .radio-box .radio-box:nth-child(1) {
+  margin-top: unset;
+}
+
+.form-wrapper .form-display form .radio-box p {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.form-wrapper .form-display form .radio-box input {
+  width: unset;
+  max-width: unset;
+  padding: unset;
+  margin: .81rem 0;
+}
+
+.form-wrapper .form-display form .radio-box input[type=date], .form-wrapper .form-display form .radio-box input[type=text] {
+  width: 455px;
+  max-width: 100%;
+  border: 1px #525557 solid;
+  padding: .875rem 1.37rem;
+  position: relative;
+}
+
+.form-wrapper .form-display form .radio-box input[type=text], .form-wrapper .form-display form .radio-box input[type=date] {
+  background: url(../media/svg/calendar.svg) no-repeat 95% 50%;
+}
+
+.form-wrapper .form-display form .radio-box ::-webkit-calendar-picker-indicator {
+  color: transparent;
+  background: none;
+  z-index: 1;
+}
+
+.form-wrapper .form-display form .radio-box p {
+  white-space: nowrap;
+  font-size: 1.125rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.form-wrapper .form-display form .radio-box textarea {
+  font-family: 'Montserrat', sans-serif;
+  margin-top: 1.5rem;
+  width: 535px;
+  height: 122px;
+  max-width: 100%;
+  display: block;
+  resize: none;
+  border: 1px #525557 solid;
+  padding: 1.5rem;
+}
+
+.form-wrapper .form-display .langlist-wrapper {
+  margin-top: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.form-wrapper .form-display .langlist-wrapper .langlist-box {
+  width: 455px;
+  max-width: 100%;
+  border: 1px #525557 solid;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: .875rem;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: .5rem auto;
+  font-style: italic;
+  font-family: 'Montserrat', sans-serif;
+  color: #454545;
+  font-size: .875rem;
+  line-height: 1rem;
+}
+
+.form-wrapper .form-display .langlist-wrapper .langlist-box #langName {
+  text-transform: uppercase;
+}
+
+.form-wrapper .form-display .langlist-wrapper .langlist-box #expYears {
+  margin-right: 6.5rem;
+}
+
+.form-wrapper .form-display .langlist-wrapper .langlist-box #removeLang {
+  cursor: pointer;
+}
+
+.form-wrapper .form-display .skill-select {
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.form-wrapper .form-display .pagination-parent {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -484,7 +626,7 @@ body {
   width: 230px;
 }
 
-.form-section .form-display .pagination-parent .page-dot {
+.form-wrapper .form-display .pagination-parent .page-dot {
   cursor: pointer;
   width: 19px;
   height: 19px;
@@ -494,28 +636,28 @@ body {
   background-color: #FE3B1F;
 }
 
-.form-section .form-display .pagination-parent .active {
+.form-wrapper .form-display .pagination-parent .active {
   background-color: #FE3B1F;
   opacity: 1;
 }
 
-.form-section .form-display .pagination-parent #prev {
+.form-wrapper .form-display .pagination-parent #prev {
   margin-right: 10.5px;
 }
 
-.form-section .form-display .pagination-parent #next {
+.form-wrapper .form-display .pagination-parent #next {
   -webkit-transform: scaleX(-1);
           transform: scaleX(-1);
   margin-left: 10.5px;
 }
 
-.form-section .about-display {
+.form-wrapper .about-display {
   width: 50%;
   height: 100vh;
   background: radial-gradient(50% 50% at 50% 50%, #0C0D0E 0%, #151718 73.44%);
 }
 
-.form-section .about-display h1 {
+.form-wrapper .about-display h1 {
   margin: 0;
   text-align: left;
   font-size: 4rem;
@@ -524,9 +666,10 @@ body {
   font-family: 'Rowdies', cursive;
   margin: 8.2rem auto;
   max-width: 705px;
+  white-space: nowrap;
 }
 
-.form-section .about-display p {
+.form-wrapper .about-display p {
   margin: 0 auto;
   font-size: 1.5rem;
   line-height: 3rem;
