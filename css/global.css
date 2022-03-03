@@ -452,6 +452,14 @@ body {
   outline: none;
 }
 
+.form-wrapper .form-display form select option {
+  color: #FE3B1F;
+}
+
+.form-wrapper .form-display form select option:disabled {
+  color: #0000004b;
+}
+
 .form-wrapper .form-display form #number {
   width: 455px;
   max-width: 100%;

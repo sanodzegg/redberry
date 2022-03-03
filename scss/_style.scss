@@ -110,6 +110,12 @@ body {
                 appearance:none;
                 background: url(../media/svg/Vector.svg) no-repeat 97% 50%;
                 outline: none;
+                option {
+                    color: $redberry-red;
+                }
+                option:disabled {
+                    color: #0000004b;
+                }
             }
             #number {
                 width: 455px;

@@ -1,5 +1,11 @@
+// api
+const TOKEN = '50db5af3-e8ff-4f9e-ab8f-d2a50fdb10aa';
 // regex
 const mail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const data = {
+    token: TOKEN,
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     // declaration
@@ -9,19 +15,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const textareas = document.querySelectorAll('textarea');
     const formbox = document.querySelectorAll('.form-box');
     const displaybox = document.querySelectorAll('.display-wrapper');
+    let count = 0;
+    let err = {};
+
+    let selected = false;
 
     document.getElementById('start').onclick = () => {
         document.body.style.background = 'unset';
         document.querySelector('.home-view').style.display = 'none';
         document.querySelector('.form-section').classList.remove('hidden');
         formbox[0].classList.remove('hidden');
+        formbox[0].classList.add('available');
         displaybox[0].classList.remove('hidden');
     }
 
     document.getElementById('number').addEventListener('keyup', function(){
         this.childNodes[3].value = this.childNodes[3].value.replace(/-/g, "").match(/.{1,3}/g).join('-');
+        data.phone = `+995${this.childNodes[3].value.replace(/-/g, "")}`
     });
-    let err = {};
+
+    getSkills(selectors[0]);
+    document.getElementById('toLangList').addEventListener('click', function(){
+        if(null){} //fix
+    });
     // validation
     inputs.forEach(e => {
         err.textval = false;
@@ -35,16 +51,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     err.textval = false;
                 } else {
                     delete err.textval;
+                    if(e.id == 'fname') {
+                        data.first_name = e.value;
+                    } else if (e.id == 'lname') {
+                        data.last_name = e.value;
+                    }
                 }
             }
             if(e.type == 'email') {
                 if(mail.test(e.value)) {
                     delete err.email;
+                    data.email = e.value;
                 } else if (e.value.length == 0) {
                     err.email = false;
                     e.style.border = '1px #FE3B1F solid';
                 } else {
                     delete err.email;
+                    data.email = e.value;
                 }
             }
             if(e.id == 'number') {
@@ -67,23 +90,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
             if(Object.keys(err).length == 0) {
-                dotbox[1].classList.add('available');
+                dotbox[count+1].classList.add('available');
             } else {
-                dotbox[1].classList.remove('available');
+                for(let i = count+1; i < dotbox.length; i++) {
+                    dotbox[i].classList.remove('active');
+                }
+                dotbox[count+1].classList.remove('available');
             }
+            selectors.forEach(e => {
+                if(e.offsetParent !== null && selected == false) {
+                    err.selector = false;
+                }
+                e.onchange = (c) => {
+                    selected = true;
+                    delete err.selector
+                }
+            });
+            console.log(data);
         }
     });
-    selectors.forEach(e => {
-        e.onchange = (c) => {
-            err.selector = true;
-            console.log(err);
-        }
-    })
-    let count = 0;
     dotbox.forEach((e, i) => {
         e.addEventListener('click', function(){
-            count = i;
             if(e.classList.contains('available')) {
+                count = i;
+                err = {};
                 e.classList.add('active');
                 for(let i = 0; i < formbox.length; i++) {
                     formbox[i].classList.add('hidden');
@@ -107,3 +137,36 @@ document.addEventListener("DOMContentLoaded", () => {
     //     }
     // });
 });
+
+const getSkills = async (node) => {
+    let res = await fetch('https://bootcamp-2022.devtest.ge/api/skills', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization : `Token ${TOKEN}`
+        }
+    });
+    let data = await res.json();
+    data.forEach(e => {
+        node.innerHTML += 
+        `
+            <option value="${e.title}">${e.title}</option>
+        `
+    })
+}
+
+// function test() {
+//     fetch('https://jsonplaceholder.typicode.com/todos', {
+//         method: 'POST',
+//         body: JSON.stringify(obj),
+//         headers: {
+//             'Content-type': 'application/json; charset=UTF-8'
+//         }
+//     })
+//     .then(response => response.json())
+//     .then(json => {
+//         console.log(json);
+//     });
+// }
+
+// test();
