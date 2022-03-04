@@ -94,6 +94,9 @@ body {
                 color: $primary-white;
                 background-color: $redberry-red;
             }
+            #toLangList {
+                pointer-events: none;
+            }
             input {
                 width: 455px;
                 max-width: 100%;
@@ -218,7 +221,7 @@ body {
                 #expYears {
                     margin-right: 6.5rem;
                 }
-                #removeLang {
+                .removeLang {
                     cursor: pointer;
                 }
             }

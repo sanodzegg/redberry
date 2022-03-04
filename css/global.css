@@ -431,6 +431,10 @@ body {
   background-color: #FE3B1F;
 }
 
+.form-wrapper .form-display form #toLangList {
+  pointer-events: none;
+}
+
 .form-wrapper .form-display form input {
   width: 455px;
   max-width: 100%;
@@ -613,7 +617,7 @@ body {
   margin-right: 6.5rem;
 }
 
-.form-wrapper .form-display .langlist-wrapper .langlist-box #removeLang {
+.form-wrapper .form-display .langlist-wrapper .langlist-box .removeLang {
   cursor: pointer;
 }
 
