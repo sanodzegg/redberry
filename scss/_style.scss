@@ -7,10 +7,6 @@ body {
     background-position: center;
 }
 
-.hidden {
-    display: none;
-}
-
 .home-view {
     width: 1090px;
     max-width: 100%;
@@ -277,4 +273,8 @@ body {
             max-width: 705px;
         }
     }
+}
+
+.hidden {
+    display: none;
 }

@@ -302,10 +302,6 @@ body {
   background-position: center;
 }
 
-.hidden {
-  display: none;
-}
-
 .home-view {
   width: 1090px;
   max-width: 100%;
@@ -684,5 +680,9 @@ body {
   color: #FFF;
   font-family: 'Montserrat', sans-serif;
   max-width: 705px;
+}
+
+.hidden {
+  display: none;
 }
 /*# sourceMappingURL=global.css.map */

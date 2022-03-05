@@ -19,11 +19,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const displaybox = document.querySelectorAll('.display-wrapper');
     const languageAddBtn = document.getElementById('toLangList');
 
-    // get every input type for validations
-    const allinputs = document.querySelectorAll('select, input, textarea, #toLangList');
+    // get first and second form inputs for validation
+    const allinputs = document.querySelectorAll('select, .coordination-input, textarea, #toLangList, #exp');
+    //covid page validation 
+    const radiobtns = document.querySelectorAll('.radiobtn');
+    const dates = document.querySelectorAll('.date');
+    const dateInputs = document.querySelectorAll('.date-input');
+    // devtalks validation
+    const devinputs = document.querySelectorAll('.devtalks');
+
+    // error objects for validation
+    let err = {};
+    let covid_err = {};
+    let devtalks_err = {};
 
     let count = 0;
-    let err = {};
     let skill_arr = [0, 1];
     let skills = [];
     let skill = {};
@@ -34,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById('start').onclick = () => {
         document.body.style.background = 'unset';
-        document.querySelector('.home-view').style.display = 'none';
+        document.querySelector('.home-view').classList.add('hidden');
         document.querySelector('.form-section').classList.remove('hidden');
         formbox[0].classList.remove('hidden');
         formbox[0].classList.add('available');
@@ -48,8 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     getSkills(selectors[0]);
 
-    const validator = () => {
-        if(Object.keys(err).length == 0) {
+    const validator = (errobj) => {
+        if(Object.keys(errobj).length == 0) {
             dotbox[count+1].classList.add('available');
         } else {
             for(let i = count+1; i < dotbox.length; i++) {
@@ -73,7 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         `
         delete err.exppoints;
-        
+
+        // pushing skill data into main object
+        skills.push(skill);
+        data.skills = [skills];
+
         // inner declarations for added skills
         const removers = document.querySelectorAll('.removeLang');
         const addedSkills = document.querySelectorAll('.langName');
@@ -87,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }
-        console.log(skills);
         removers.forEach((e, i) => {
             e.addEventListener('click', function(){
                 for(let i = 0; i < options.length; i++) {
@@ -97,14 +110,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
                 e.parentNode.remove();
-                skills.splice(i, 1)
                 if(document.querySelectorAll('.removeLang').length < 1) {
                     err.exppoints = false;
-                    validator();
+                    validator(err);
                 }
             });
         });
-        validator();
+        validator(err);
     });
 
     
@@ -152,11 +164,13 @@ document.addEventListener("DOMContentLoaded", () => {
                    delete err.number;
                 }
             }
-            if(e.type == 'number') {
+
+            if(e.id == 'exp') {
                 if(e.value.length == 0) {
                     err.exp = false;
                 } else {
-                    skill_arr.splice(0, 1, parseInt(e.value));
+                    console.log(e.value);
+                    skill_arr.splice(0, 1, e.value);
                     skill.experience = parseInt(e.value);
                     delete err.exp;
                 }
@@ -164,14 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             selectors.forEach(e => {
                 if(e.offsetParent !== null && selected == false) {
-                    err.selector = false;
-                    err.exppoints = false;
-                    err.exp = false;
-                } else {
-                    delete err.selector;
-                }
-                e.onclick = () => {
-                    err.selector = false;
                     err.exppoints = false;
                 }
                 e.onchange = (c) => {
@@ -183,8 +189,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             skill.id = key.id;
                         }
                     });
+                    if(document.querySelectorAll('.removeLang').length < 1) {
+                        err.exppoints = false;
+                        validator(err);
+                    }
                 }
             });
+
             const options = document.querySelectorAll('option');
             options.forEach(i => {
                 if(typeof(skill_arr[1]) === 'string' && selectors[0].value == i.innerText) {
@@ -197,11 +208,118 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
             });
-            validator();
+            validator(err)
+        }
+    });
+    radiobtns.forEach(e => {
+        covid_err.location = false;
+        covid_err.contacted = false;
+        covid_err.vaccinated = false;
+        if(e.type == 'radio') {
+            e.onclick = () => {
+                if(e.name == 'location') {
+                    delete covid_err.location;
+                    data.work_preference = e.value;
+                }
+                if(e.name == 'c19-status') {
+                    if(e.value == 'yes') {
+                        delete covid_err.contacted;
+                        covid_err.coviddate = false;
+                        data.had_covid = true;
+                        dates[0].classList.remove('hidden');
+                        dateInputs[0].onblur = (e) => {
+                            if(`${Date.parse(e.target.value)}` !== `NaN`) {
+                                delete covid_err.coviddate;
+                                data.had_covid_at = `${e.target.value}`;
+                            } else {
+                                covid_err.coviddate = false;
+                                delete data.had_covid_at;
+                                // do your validation magic
+                            }
+                            validator(covid_err)
+                        }
+                    } else {
+                        delete covid_err.contacted;
+                        delete covid_err.coviddate;
+                        data.had_covid = false;
+                        delete data.had_covid_at;
+                        dates[0].classList.add('hidden');
+                    }
+                }
+                if(e.name == 'vacc-status') {
+                    if(e.value == 'yes') {
+                        delete covid_err.vaccinated;
+                        covid_err.vaccdate = false;
+                        data.vaccinated = true;
+                        dates[1].classList.remove('hidden');
+                        dateInputs[1].onblur = (e) => {
+                            if(`${Date.parse(e.target.value)}` != `NaN`) {
+                                delete covid_err.vaccdate;
+                                data.vaccinated_at = `${e.target.value}`;
+                            } else {
+                                covid_err.vaccdate = false;
+                                delete data.vaccinated_at;
+                                // do your validation magic
+                            }
+                            validator(covid_err)
+                        }
+                    } else {
+                        delete covid_err.vaccdate;
+                        delete covid_err.vaccinated;
+                        data.vaccinated = false;
+                        delete data.vaccinated_at;
+                        dates[1].classList.add('hidden');
+                    }
+                }
+                validator(covid_err)
+            }
+        }
+    });
+    devinputs.forEach(e => {
+        devtalks_err.attend = false;
+        devtalks_err.speaker = false;
+        devtalks_err.special = false;
+
+        if(e.type == 'radio') {
+            e.onclick = () => {
+                if(e.value == 'yes') {
+                    delete devtalks_err.attend;
+                    data.will_organize_devtalk = true;
+                } else if(e.value == 'no') {
+                    delete devtalks_err.attend;
+                    data.will_organize_devtalk = false;
+                } else {
+                    devtalks_err.attend = false;
+                }
+                console.log(devtalks_err);
+                validator(devtalks_err);
+            }
+        } else {
+            e.onchange = () => {
+                if(e.name == 'devtalk') {
+                    if(e.value.length > 0) {
+                        delete devtalks_err.speaker;
+                        data.devtalk_topic = `${e.value}`;
+                    } else {
+                        devtalks_err.speaker = false;
+                        delete data.devtalk_topic;
+                    }
+                } else {
+                    if(e.value.length > 0) {
+                        delete devtalks_err.special;
+                        data.something_special = `${e.value}`;
+                    } else {
+                        devtalks_err.special = false;
+                        delete data.devtalk_topic;
+                    }
+                }
+                console.log(devtalks_err);
+                validator(devtalks_err);
+            }
         }
     });
     dotbox.forEach((e, i) => {
-        e.addEventListener('click', function(){
+        e.addEventListener('click', () => {
             if(e.classList.contains('available')) {
                 count = i;
                 err = {};
@@ -212,6 +330,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 formbox[i].classList.remove('hidden');
                 displaybox[i].classList.remove('hidden');
+                if(i == 4) {
+                    document.querySelector('.form-section').classList.add('hidden');
+                    document.querySelector('.submit-section').classList.remove('hidden');
+                    document.body.style.background = '$primary-bg';
+                }
             }
         })
     });

@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./css/global.css">
 </head>
 <body>
-    <section class="home-view" role="display welcoming message to the visitors">
+    <section class="home-view hidden" role="display welcoming message to the visitors">
         <h1>Welcome Rocketeer!</h1>
         <div class="nav">
             <button id="start">Start Questionnaire</button>
@@ -28,12 +28,12 @@
                 <div class="form-box hidden">
                     <h1>Hey, Rocketeer, what are your coordinates?</h1>
                     <form name="general">
-                        <input type="text" id="fname" placeholder="First Name">
-                        <input type="text" id="lname" placeholder="Last Name">
-                        <input type="email" id="email" placeholder="E Mail">
+                        <input class="coordination-input" type="text" id="fname" placeholder="First Name">
+                        <input class="coordination-input" type="text" id="lname" placeholder="Last Name">
+                        <input class="coordination-input" type="email" id="email" placeholder="E Mail">
                         <div id="number">
                             <span>+955</span>
-                            <input type="text" name="pn" id="number"placeholder="5__ __ __ __" maxlength="11">
+                            <input class="coordination-input" type="text" name="pn" id="number"placeholder="5__ __ __ __" maxlength="11">
                         </div>
                     </form>
                 </div>
@@ -55,47 +55,47 @@
                         <div class="radio-box">
                             <p>How would you prefer to work?</p>
                             <div class="radio-button">
-                                <input type="radio" name="location" value="office">
+                                <input class="radiobtn" type="radio" name="location" value="from_office">
                                 <label for="location">From Sairme Office</label>
                             </div>
                             <div class="radio-button">
-                                <input type="radio" name="location" value="home">
+                                <input class="radiobtn" type="radio" name="location" value="from_home">
                                 <label for="location">From Home</label>
                             </div>
                             <div class="radio-button">
-                                <input type="radio" name="location" value="hybrid">
+                                <input class="radiobtn" type="radio" name="location" value="hybrid">
                                 <label for="location">Hybrid</label>
                             </div>
                         </div>
                         <div class="radio-box">
                             <p>Did you contact covid 19? :(</p>
                             <div class="radio-button">
-                                <input type="radio" name="c19-status" value="yes">
+                                <input class="radiobtn" type="radio" name="c19-status" value="yes">
                                 <label for="c19-status">Yes</label>
                             </div>
                             <div class="radio-button">
-                                <input type="radio" name="c19-status" value="no">
+                                <input class="radiobtn" type="radio" name="c19-status" value="no">
                                 <label for="c19-status">No</label>
                             </div>
                         </div>
-                        <div class="radio-box">
+                        <div class="radio-box date hidden">
                             <p>When?</p>
-                            <input id="dateOfC19" placeholder="Date" type="text" onfocus="(this.type='date')">
+                            <input id="dateOfC19" class="date-input" placeholder="Date" type="text" onfocus="(this.type='date')">
                         </div>
                         <div class="radio-box">
                             <p>Have you been vaccinated?</p>
                             <div class="radio-button">
-                                <input type="radio" name="vacc-status" value="yes">
+                                <input class="radiobtn" type="radio" name="vacc-status" value="yes">
                                 <label for="vacc-status">Yes</label>
                             </div>
                             <div class="radio-button">
-                                <input type="radio" name="vacc-status" value="no">
-                                <label for="vacc-status">Yes</label>
+                                <input class="radiobtn" type="radio" name="vacc-status" value="no">
+                                <label for="vacc-status">No</label>
                             </div>
                         </div>
-                        <div class="radio-box">
+                        <div class="radio-box date hidden">
                             <p>When did you get your last covid vaccine?</p>
-                            <input id="dateOfVacc" placeholder="Date" type="text" onfocus="(this.type='date')">
+                            <input id="dateOfVacc" class="date-input" placeholder="Date" type="text" onfocus="(this.type='date')">
                         </div>
                     </form>
                 </div>
@@ -105,21 +105,21 @@
                         <div class="radio-box">
                             <p>Would you attend Devtalks and maybe also organize your own?</p>
                             <div class="radio-button">
-                                <input type="radio" name="devtalks" value="yes">
+                                <input class="devtalks radiobtn" type="radio" name="devtalks" value="yes">
                                 <label for="devtalks">Yes</label>
                             </div>
                             <div class="radio-button">
-                                <input type="radio" name="devtalks" value="no">
+                                <input class="devtalks radiobtn" type="radio" name="devtalks" value="no">
                                 <label for="devtalks">No</label>
                             </div>
                         </div>
                         <div class="radio-box">
                             <label for="devtalk">What would you speak about at Devtalk?</label>
-                            <textarea id="areaDevTalk" name="devtalk" placeholder="I would..."></textarea>
+                            <textarea class="devtalks textarea" id="areaDevTalk" name="devtalk" placeholder="I would..."></textarea>
                         </div>
                         <div class="radio-box">
                             <label for="special">Tell us something special</label>
-                            <textarea id="areaSpecial" name="special" placeholder="I..."></textarea>
+                            <textarea class="devtalks textarea" id="areaSpecial" name="special" placeholder="I..."></textarea>
                         </div>
                     </form>
                 </div>
@@ -152,6 +152,9 @@
                 </div>
             </div>
         </div>
+    </section>
+    <section class="submit-section" role="page where you submit your application">
+        <button type="submit"></button>
     </section>
 </body>
 </html>
