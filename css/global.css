@@ -609,10 +609,6 @@ body {
   line-height: 1rem;
 }
 
-.form-wrapper .form-display .langlist-wrapper .langlist-box #langName {
-  text-transform: uppercase;
-}
-
 .form-wrapper .form-display .langlist-wrapper .langlist-box #expYears {
   margin-right: 6.5rem;
 }

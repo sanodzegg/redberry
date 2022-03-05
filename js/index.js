@@ -19,10 +19,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const displaybox = document.querySelectorAll('.display-wrapper');
     const languageAddBtn = document.getElementById('toLangList');
 
+    // get every input type for validations
+    const allinputs = document.querySelectorAll('select, input, textarea, #toLangList');
+
     let count = 0;
     let err = {};
     let skill_arr = [0, 1];
+    let skills = [];
+    let skill = {};
+
+    // let bools
     let selected = false;
+    let iterated = false;
 
     document.getElementById('start').onclick = () => {
         document.body.style.background = 'unset';
@@ -40,11 +48,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     getSkills(selectors[0]);
 
-    languageAddBtn.addEventListener('click', function(){
+    const validator = () => {
+        if(Object.keys(err).length == 0) {
+            dotbox[count+1].classList.add('available');
+        } else {
+            for(let i = count+1; i < dotbox.length; i++) {
+                dotbox[i].classList.remove('active');
+            }
+            dotbox[count+1].classList.remove('available');
+        }
+    }
+
+    languageAddBtn.addEventListener('click', () => {
         document.querySelector('.langlist-wrapper').innerHTML += 
         `
         <div class="langlist-box">
-            <span id="langName">${skill_arr[1]}</span>
+            <span class="langName" id="langName">${skill_arr[1]}</span>
             <span id="expYears">years of experience: ${skill_arr[0]}</span>
             <div class="removeLang">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -53,17 +72,44 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         </div>
         `
+        delete err.exppoints;
+        
+        // inner declarations for added skills
         const removers = document.querySelectorAll('.removeLang');
-        removers.forEach(e => {
+        const addedSkills = document.querySelectorAll('.langName');
+        const options = document.querySelectorAll('option');
+
+        for(let i = 0; i < options.length; i++) {
+            addedSkills.forEach(e => {
+                if(e.innerText == options[i].innerText) {
+                    options[i].disabled = true;
+                    languageAddBtn.style.pointerEvents = 'none';
+                }
+            });
+        }
+        console.log(skills);
+        removers.forEach((e, i) => {
             e.addEventListener('click', function(){
+                for(let i = 0; i < options.length; i++) {
+                    if(e.parentNode.childNodes[1].innerText == options[i].innerText) {
+                        options[i].removeAttribute('disabled');
+                        languageAddBtn.style.pointerEvents = 'all';
+                    }
+                }
                 e.parentNode.remove();
-            })
-        })
+                skills.splice(i, 1)
+                if(document.querySelectorAll('.removeLang').length < 1) {
+                    err.exppoints = false;
+                    validator();
+                }
+            });
+        });
+        validator();
     });
 
     
     // validation
-    inputs.forEach(e => {
+    allinputs.forEach(e => {
         err.textval = false;
         err.email = false;
         e.onblur = () => {
@@ -110,44 +156,48 @@ document.addEventListener("DOMContentLoaded", () => {
                 if(e.value.length == 0) {
                     err.exp = false;
                 } else {
-                    skill_arr.splice(0, 1, e.value);
+                    skill_arr.splice(0, 1, parseInt(e.value));
+                    skill.experience = parseInt(e.value);
                     delete err.exp;
                 }
             }
-            if(Object.keys(err).length == 0) {
-                dotbox[count+1].classList.add('available');
-            } else {
-                for(let i = count+1; i < dotbox.length; i++) {
-                    dotbox[i].classList.remove('active');
-                }
-                dotbox[count+1].classList.remove('available');
-            }
+
             selectors.forEach(e => {
                 if(e.offsetParent !== null && selected == false) {
                     err.selector = false;
+                    err.exppoints = false;
+                    err.exp = false;
                 } else {
                     delete err.selector;
                 }
+                e.onclick = () => {
+                    err.selector = false;
+                    err.exppoints = false;
+                }
                 e.onchange = (c) => {
-                    console.log(err);
+                    languageAddBtn.style.pointerEvents = 'all';
                     selected = true;
                     Object.values(skill_data).find(key => {
                         if(key.title === c.target.value) {
                             skill_arr.splice(1, 1, c.target.value);
+                            skill.id = key.id;
                         }
                     });
                 }
             });
-            console.log(err);
-            // console.log(skill_arr);
-
-            if(typeof(skill_arr[1]) === 'string' && Object.keys(err).length == 0) {
-                languageAddBtn.style.pointerEvents = 'all';
-                languageAddBtn.style.cursor = 'pointer';
-            } else {
-                languageAddBtn.style.pointerEvents = 'none';
-                languageAddBtn.style.cursor = 'unset';
-            }
+            const options = document.querySelectorAll('option');
+            options.forEach(i => {
+                if(typeof(skill_arr[1]) === 'string' && selectors[0].value == i.innerText) {
+                    if(i.disabled != true) {
+                        languageAddBtn.style.pointerEvents = 'all';
+                        languageAddBtn.style.cursor = 'pointer'; 
+                    } else {
+                        languageAddBtn.style.pointerEvents = 'none';
+                        languageAddBtn.style.cursor = 'pointer';
+                    }
+                }
+            });
+            validator();
         }
     });
     dotbox.forEach((e, i) => {
@@ -183,8 +233,8 @@ const getSkills = async (node) => {
     let res = await fetch('https://bootcamp-2022.devtest.ge/api/skills', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
-            Authorization : `Token ${TOKEN}`
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         }
     });
     let data = await res.json();
