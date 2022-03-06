@@ -19,8 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const displaybox = document.querySelectorAll('.display-wrapper');
     const languageAddBtn = document.getElementById('toLangList');
 
-    // get first and second form inputs for validation
-    const allinputs = document.querySelectorAll('select, .coordination-input, textarea, #toLangList, #exp');
+    // coordination validation
+    const coordinationVal = document.querySelectorAll('.coordination');
+    // skills validation
+    const skillsVal = document.querySelectorAll('.skills');
     //covid page validation 
     const radiobtns = document.querySelectorAll('.radiobtn');
     const dates = document.querySelectorAll('.date');
@@ -28,38 +30,43 @@ document.addEventListener("DOMContentLoaded", () => {
     // devtalks validation
     const devinputs = document.querySelectorAll('.devtalks');
 
+
     // error objects for validation
-    let err = {};
+    let coord_err = {};
+    let skills_err = {};
     let covid_err = {};
     let devtalks_err = {};
 
     let count = 0;
     let skill_arr = [0, 1];
-    let skills = [];
+    // this is for data object 
+    let skillid;
     let skill = {};
-
-    // let bools
-    let selected = false;
-    let iterated = false;
+    let skills = [];
 
     document.getElementById('start').onclick = () => {
         document.body.style.background = 'unset';
         document.querySelector('.home-view').classList.add('hidden');
         document.querySelector('.form-section').classList.remove('hidden');
-        formbox[0].classList.remove('hidden');
-        formbox[0].classList.add('available');
+        formbox[1].classList.remove('hidden');
+        formbox[1].classList.add('available');
         displaybox[0].classList.remove('hidden');
     }
 
-    document.getElementById('number').addEventListener('keyup', function(){
-        this.childNodes[3].value = this.childNodes[3].value.replace(/-/g, "").match(/.{1,3}/g).join('-');
-        data.phone = `+995${this.childNodes[3].value.replace(/-/g, "")}`
+    document.getElementById('number').addEventListener('keyup', function() {
+        let node = this.childNodes[3];
+        try {
+            node.value = node.value.replace(/-/g, "").match(/.{1,3}/g).join('-');
+            data.phone = `+995${node.value.replace(/-/g, "")}`
+        } catch(err) {
+            // maybe a popup?
+        }
     });
 
     getSkills(selectors[0]);
 
-    const validator = (errobj) => {
-        if(Object.keys(errobj).length == 0) {
+    const validator = (errobj, value) => {
+        if(Object.keys(errobj).length == value) {
             dotbox[count+1].classList.add('available');
         } else {
             for(let i = count+1; i < dotbox.length; i++) {
@@ -82,12 +89,13 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         </div>
         `
-        delete err.exppoints;
-
+        delete skills_err.exppoints;
         // pushing skill data into main object
+        skill.id = skillid;
+        skill.experience = parseInt(skill_arr[0]);    
         skills.push(skill);
+        skill = {};
         data.skills = [skills];
-
         // inner declarations for added skills
         const removers = document.querySelectorAll('.removeLang');
         const addedSkills = document.querySelectorAll('.langName');
@@ -109,30 +117,40 @@ document.addEventListener("DOMContentLoaded", () => {
                         languageAddBtn.style.pointerEvents = 'all';
                     }
                 }
+                for(let e = 0; e < document.querySelectorAll('.removeLang').length; e++) {
+                    console.log(document.querySelectorAll('.removeLang')[e]);
+                }
+                skills.splice(i, 1, "");
+                skills = skills.filter((el) => {
+                    return el != "";
+                });
+                data.skills = [skills];
                 e.parentNode.remove();
                 if(document.querySelectorAll('.removeLang').length < 1) {
-                    err.exppoints = false;
-                    validator(err);
+                    skills_err.exppoints = false;
+                    data.skills = {};
+                    validator(skills_err, 1);
                 }
             });
+            console.log(data);
         });
-        validator(err);
+        validator(skills_err, 1);
     });
 
     
     // validation
-    allinputs.forEach(e => {
-        err.textval = false;
-        err.email = false;
+    coordinationVal.forEach(e => {
+        coord_err.textval = false;
+        coord_err.email = false;
         e.onblur = () => {
             if(e.id == 'fname' || e.id == 'lname'){
                 if(e.value.length == 0) {
-                    err.textval = false;
+                    coord_err.textval = false;
                     e.style.border = '1px #FE3B1F solid';
                 } else if (e.value.length <= 2) {
-                    err.textval = false;
+                    coord_err.textval = false;
                 } else {
-                    delete err.textval;
+                    delete coord_err.textval;
                     if(e.id == 'fname') {
                         data.first_name = e.value;
                     } else if (e.id == 'lname') {
@@ -142,73 +160,73 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             if(e.type == 'email') {
                 if(mail.test(e.value)) {
-                    delete err.email;
+                    delete coord_err.email;
                     data.email = e.value;
                 } else if (e.value.length == 0) {
-                    err.email = false;
+                    coord_err.email = false;
                     e.style.border = '1px #FE3B1F solid';
                 } else {
-                    delete err.email;
+                    delete coord_err.email;
                     data.email = e.value;
                 }
             }
             if(e.id == 'number') {
                 if(e.value.length == 0) {
-                    delete err.number;
+                    delete coord_err.number;
                     e.style.border = '1px #525557 solid';
                 } else if (e.value.length > 1 && e.value.length != 11) {
-                    err.number = false;
+                    coord_err.number = false;
                 } else if(e.value[0] != '5') {
-                    err.number = false;
+                    coord_err.number = false;
                 } else {
-                   delete err.number;
+                   delete coord_err.number;
                 }
             }
-
+            validator(coord_err, 0)
+        }
+    });
+    skillsVal.forEach(e => {
+        skills_err.exppoints = false;
+        skills_err.values = {
+            exp: false,
+            selected: false
+        };
+        e.onchange = (c) => {
+            if(e.id == 'skills') {
+                delete skills_err.values.selected;
+                Object.values(skill_data).find(key => {
+                    if(key.title === c.target.value) {
+                        skill_arr.splice(1, 1, c.target.value);
+                        skillid = key.id;
+                    }
+                });
+            }
             if(e.id == 'exp') {
                 if(e.value.length == 0) {
-                    err.exp = false;
+                    skills_err.values.exp = false;
                 } else {
-                    console.log(e.value);
                     skill_arr.splice(0, 1, e.value);
-                    skill.experience = parseInt(e.value);
-                    delete err.exp;
+                    delete skills_err.values.exp;
                 }
             }
-
-            selectors.forEach(e => {
-                if(e.offsetParent !== null && selected == false) {
-                    err.exppoints = false;
-                }
-                e.onchange = (c) => {
-                    languageAddBtn.style.pointerEvents = 'all';
-                    selected = true;
-                    Object.values(skill_data).find(key => {
-                        if(key.title === c.target.value) {
-                            skill_arr.splice(1, 1, c.target.value);
-                            skill.id = key.id;
-                        }
-                    });
-                    if(document.querySelectorAll('.removeLang').length < 1) {
-                        err.exppoints = false;
-                        validator(err);
-                    }
-                }
-            });
-
+            if(document.querySelectorAll('.removeLang').length >= 1) {
+                delete skills_err.exppoints;
+                validator(skills_err, 1);
+            } else {
+                skills_err.exppoints = false;
+            }
             const options = document.querySelectorAll('option');
             options.forEach(i => {
                 if(typeof(skill_arr[1]) === 'string' && selectors[0].value == i.innerText) {
-                    if(i.disabled != true) {
+                    if(i.disabled != true && Object.values(skills_err.values).length == 0) {
                         languageAddBtn.style.pointerEvents = 'all';
                         languageAddBtn.style.cursor = 'pointer'; 
                     } else {
                         languageAddBtn.style.pointerEvents = 'none';
-                        languageAddBtn.style.cursor = 'pointer';
+                        languageAddBtn.style.cursor = 'unset';
                     }
                 }
             });
-            validator(err)
         }
     });
     radiobtns.forEach(e => {
@@ -236,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 delete data.had_covid_at;
                                 // do your validation magic
                             }
-                            validator(covid_err)
+                            validator(covid_err, 0)
                         }
                     } else {
                         delete covid_err.contacted;
@@ -261,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 delete data.vaccinated_at;
                                 // do your validation magic
                             }
-                            validator(covid_err)
+                            validator(covid_err, 0)
                         }
                     } else {
                         delete covid_err.vaccdate;
@@ -271,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         dates[1].classList.add('hidden');
                     }
                 }
-                validator(covid_err)
+                validator(covid_err, 0)
             }
         }
     });
@@ -291,8 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     devtalks_err.attend = false;
                 }
-                console.log(devtalks_err);
-                validator(devtalks_err);
+                validator(devtalks_err, 0);
             }
         } else {
             e.onchange = () => {
@@ -313,30 +330,31 @@ document.addEventListener("DOMContentLoaded", () => {
                         delete data.devtalk_topic;
                     }
                 }
-                console.log(devtalks_err);
-                validator(devtalks_err);
+                validator(devtalks_err, 0);
             }
         }
     });
     dotbox.forEach((e, i) => {
         e.addEventListener('click', () => {
             if(e.classList.contains('available')) {
-                count = i;
-                err = {};
-                e.classList.add('active');
-                for(let i = 0; i < formbox.length; i++) {
-                    formbox[i].classList.add('hidden');
-                    displaybox[i].classList.add('hidden');
-                }
-                formbox[i].classList.remove('hidden');
-                displaybox[i].classList.remove('hidden');
-                if(i == 4) {
+                if(i < 4) {
+                        count = i;
+                        err = {};
+                        e.classList.add('active');
+                        for(let i = 0; i < formbox.length; i++) {
+                            formbox[i].classList.add('hidden');
+                            displaybox[i].classList.add('hidden');
+                        }
+                        formbox[i].classList.remove('hidden');
+                        displaybox[i].classList.remove('hidden');
+                } else {
                     document.querySelector('.form-section').classList.add('hidden');
                     document.querySelector('.submit-section').classList.remove('hidden');
                     document.body.style.background = '$primary-bg';
+                    console.log(data);
                 }
             }
-        })
+        });
     });
     // document.getElementById('prev').addEventListener('click', function(){
     //     if(count > 0) {

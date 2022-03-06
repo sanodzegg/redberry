@@ -432,6 +432,7 @@ body {
 }
 
 .form-wrapper .form-display form input {
+  accent-color: #FE3B1F;
   width: 455px;
   max-width: 100%;
   border: 1px #525557 solid;

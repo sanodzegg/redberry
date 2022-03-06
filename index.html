@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./css/global.css">
 </head>
 <body>
-    <section class="home-view hidden" role="display welcoming message to the visitors">
+    <section class="home-view" role="display welcoming message to the visitors">
         <h1>Welcome Rocketeer!</h1>
         <div class="nav">
             <button id="start">Start Questionnaire</button>
@@ -28,22 +28,22 @@
                 <div class="form-box hidden">
                     <h1>Hey, Rocketeer, what are your coordinates?</h1>
                     <form name="general">
-                        <input class="coordination-input" type="text" id="fname" placeholder="First Name">
-                        <input class="coordination-input" type="text" id="lname" placeholder="Last Name">
-                        <input class="coordination-input" type="email" id="email" placeholder="E Mail">
+                        <input class="coordination default-input" type="text" id="fname" placeholder="First Name">
+                        <input class="coordination default-input" type="text" id="lname" placeholder="Last Name">
+                        <input class="coordination default-input" type="email" id="email" placeholder="E Mail">
                         <div id="number">
                             <span>+955</span>
-                            <input class="coordination-input" type="text" name="pn" id="number"placeholder="5__ __ __ __" maxlength="11">
+                            <input class="coordination default-input" type="text" name="pn" id="number"placeholder="5__ __ __ __" maxlength="11">
                         </div>
                     </form>
                 </div>
                 <div class="form-box hidden">
                     <h1>Tell us about your skills</h1>
                     <form name="general" class="skill-select">
-                        <select name="skill-select" id="skills">
+                        <select class="skills default-select" name="skill-select" id="skills">
                             <option value="default" disabled selected>Skills</option>
                         </select>
-                        <input type="number" id="exp" placeholder="Experience Duration in Years">
+                        <input type="number" class="skills default-input" id="exp" placeholder="Experience Duration in Years">
                         <div class="default-button" id="toLangList">Add Programming Language</div>
                     </form>
                     <div class="langlist-wrapper">
@@ -153,8 +153,8 @@
             </div>
         </div>
     </section>
-    <section class="submit-section" role="page where you submit your application">
-        <button type="submit"></button>
+    <section class="submit-section hidden" role="page where you submit your application">
+        <button id="submitButton"></button>
     </section>
 </body>
 </html>

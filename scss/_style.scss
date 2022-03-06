@@ -94,6 +94,7 @@ body {
                 pointer-events: none;
             }
             input {
+                accent-color: $redberry-red;
                 width: 455px;
                 max-width: 100%;
                 border: 1px $primary-stroke solid;
