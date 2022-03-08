@@ -371,6 +371,10 @@ body {
 }
 
 .home-view img {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   width: 37.525%;
   min-width: 25.577rem;
 }
@@ -721,7 +725,7 @@ body {
   background-color: #FE3B1F;
   font-size: 2.25rem;
   line-height: 2.75rem;
-  border-radius: 3.125;
+  border-radius: 3.125rem;
   color: #FFF;
 }
 
@@ -731,6 +735,218 @@ body {
   line-height: 2.125rem;
   text-decoration: underline;
   color: #FFF;
+}
+
+.submit-section .defaultHeading {
+  margin: 0;
+  text-align: center;
+  font-size: 4rem;
+  line-height: 4.87;
+  color: #FE3B1F;
+  font-family: 'Rowdies', cursive;
+}
+
+.submitted-section {
+  width: 1154px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.submitted-section h3 {
+  font-family: 'Rowdies', cursive;
+  color: #FFF;
+  font-size: 3.5rem;
+  line-height: 4.35rem;
+}
+
+.submitted-section .app-wrapper {
+  margin: .5rem 0;
+}
+
+.submitted-section .app-wrapper .app-header {
+  width: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #FE3B1F;
+  padding: .75rem 1.25rem;
+  cursor: pointer;
+}
+
+.submitted-section .app-wrapper .app-header span {
+  font-weight: lighter;
+  font-family: 'Rowdies', cursive;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  color: #FFF;
+}
+
+.submitted-section .app-wrapper .app-header path {
+  fill: #FFF;
+}
+
+.submitted-section .app-wrapper .app-body {
+  font-family: 'Montserrat', sans-serif;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  height: 0;
+  overflow: hidden;
+  background-color: #FFF;
+}
+
+.submitted-section .app-wrapper .app-body .radiobtn {
+  pointer-events: none;
+  accent-color: #454545;
+}
+
+.submitted-section .app-wrapper .app-body .radio-button {
+  margin: .3rem 0;
+}
+
+.submitted-section .app-wrapper .app-body h6 {
+  font-style: italic;
+  text-decoration: underline;
+  color: #FE3B1F;
+  font-size: 1.125rem;
+  line-height: 1.37rem;
+  text-transform: capitalize;
+}
+
+.submitted-section .app-wrapper .app-body .personal, .submitted-section .app-wrapper .app-body .skillset, .submitted-section .app-wrapper .app-body .insights, .submitted-section .app-wrapper .app-body .covid {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 50%;
+          flex: 1 50%;
+}
+
+.submitted-section .app-wrapper .app-body .personal, .submitted-section .app-wrapper .app-body .covid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-left: 10rem;
+}
+
+.submitted-section .app-wrapper .app-body .personal .info-wrapper, .submitted-section .app-wrapper .app-body .covid .info-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 75%;
+}
+
+.submitted-section .app-wrapper .app-body .personal .info-wrapper p, .submitted-section .app-wrapper .app-body .covid .info-wrapper p {
+  color: #000;
+  font-size: .75rem;
+  white-space: nowrap;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.submitted-section .app-wrapper .app-body .personal .info-wrapper .creditals p, .submitted-section .app-wrapper .app-body .covid .info-wrapper .creditals p {
+  color: #454545;
+}
+
+.submitted-section .app-wrapper .app-body .personal p, .submitted-section .app-wrapper .app-body .covid p {
+  font-size: 1.125rem;
+}
+
+.submitted-section .app-wrapper .app-body .personal label, .submitted-section .app-wrapper .app-body .covid label {
+  font-size: .875rem;
+}
+
+.submitted-section .app-wrapper .app-body .personal input[type=text], .submitted-section .app-wrapper .app-body .covid input[type=text] {
+  width: 390px;
+  max-width: 100%;
+  border: 1px #525557 solid;
+  padding: .875rem 1.37rem;
+  position: relative;
+  background: url(../media/svg/calendar.svg) no-repeat 95% 50%;
+  pointer-events: none;
+}
+
+.submitted-section .app-wrapper .app-body .skillset, .submitted-section .app-wrapper .app-body .insights {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-right: 10rem;
+  padding-left: 3rem;
+}
+
+.submitted-section .app-wrapper .app-body .skillset .skill, .submitted-section .app-wrapper .app-body .insights .skill {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 70%;
+}
+
+.submitted-section .app-wrapper .app-body .skillset span, .submitted-section .app-wrapper .app-body .insights span {
+  font-style: italic;
+}
+
+.submitted-section .app-wrapper .app-body .skillset p, .submitted-section .app-wrapper .app-body .insights p {
+  font-size: .875rem;
+  font-style: italic;
+  margin: .5rem 0;
+}
+
+.submitted-section .app-wrapper .app-body .insights p:nth-child(1) {
+  margin-top: unset;
+  font-size: 1.125rem;
+  font-style: normal;
+}
+
+.submitted-section .app-wrapper .app-body .insights .textarea-wrapper {
+  margin-top: 4.5rem;
+}
+
+.submitted-section .app-wrapper .app-body .insights .textarea-wrapper textarea {
+  pointer-events: none;
+  font-family: 'Montserrat', sans-serif;
+  width: 369px;
+  height: 122px;
+  max-width: 100%;
+  display: block;
+  resize: none;
+  border: 1px #525557 solid;
+  padding: 1.5rem;
+}
+
+.submitted-section .app-wrapper .active {
+  height: unset;
+  padding-bottom: 2rem;
 }
 
 .hidden {

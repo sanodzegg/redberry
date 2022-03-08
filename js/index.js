@@ -1,5 +1,5 @@
 // api
-const TOKEN = '50db5af3-e8ff-4f9e-ab8f-d2a50fdb10aa';
+const TOKEN = '2b1386d4-06ae-4825-81fe-3f2869760ced';
 // regex
 const mail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const displaybox = document.querySelectorAll('.display-wrapper');
     const languageAddBtn = document.getElementById('toLangList');
 
+    const getdata = document.getElementById('submitted');
     const submit = document.getElementById('submitButton');
     const back = document.getElementById('goBackBtn');
 
@@ -353,6 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.querySelectorAll('.radio-box')[6].classList.remove('hidden');
                 } else {
                     delete devtalks_err.attend;
+                    delete devtalks_err.speaker;
                     data.will_organize_devtalk = false;
                     document.querySelectorAll('.radio-box')[6].classList.add('hidden');
                 }
@@ -429,7 +431,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     document.getElementById('next').addEventListener('click', function(){
-        if(count < 4) {
+        if(count < 3) {
             count++;
             if(dotbox[count].classList.contains('available')) {
                 dotbox[count].classList.add('active');
@@ -442,6 +444,10 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 count--;
             }
+        } else {
+            document.querySelector('.form-section').classList.add('hidden');
+            document.querySelector('.submit-section').classList.remove('hidden');
+            document.body.style.background = '$primary-bg';
         }
     });
     submit.addEventListener('click', () => {
@@ -456,18 +462,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }
-        data.skills = [skills];
-        console.log(data);
+        data.skills = skills;
+        sendData();
+
+        // display a message
+        submit.style.display = 'none';
+        back.style.display = 'none';
+        document.querySelector('.submit-section').innerHTML = `<h1 class="defaultHeading">Thanks for Joining 😊</h1>`;
+        setTimeout(() => {
+            document.querySelector('.defaultHeading').remove();
+            location.reload();
+        }, 3000);
     });
     back.addEventListener('click', () => {
         document.querySelector('.submit-section').classList.add('hidden');
         document.querySelector('.form-section').classList.remove('hidden');
     });
-});
 
-function insertAfter(referenceNode, newNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}
+    getdata.addEventListener('click', () => {
+        document.querySelector('.home-view').classList.add('hidden');
+        document.querySelector('.submitted-section').classList.remove('hidden');
+        getData();
+
+    });
+
+});
 
 const getSkills = async (node) => {
     let res = await fetch('https://bootcamp-2022.devtest.ge/api/skills', {
@@ -487,18 +506,201 @@ const getSkills = async (node) => {
     })
 }
 
-// function test() {
-//     fetch('https://jsonplaceholder.typicode.com/todos', {
-//         method: 'POST',
-//         body: JSON.stringify(obj),
-//         headers: {
-//             'Content-type': 'application/json; charset=UTF-8'
-//         }
-//     })
-//     .then(response => response.json())
-//     .then(json => {
-//         console.log(json);
-//     });
-// }
+const sendData = () => {
+    fetch('https://bootcamp-2022.devtest.ge/api/application', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    })
+}
 
-// test();
+const getData = () => {
+    let scopedData = [];
+    fetch(`https://bootcamp-2022.devtest.ge/api/applications?token=${TOKEN}`)
+    .then(res => res.json())
+    .then(data => {
+        data.forEach((el, i) => {
+            scopedData.push(el);
+            let generatedNode = document.createElement('div');
+            generatedNode.setAttribute('class', 'app-wrapper');
+            generatedNode.innerHTML = 
+            `
+                <div class="app-header">
+                    <span>${i+1}</span>
+                    <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.01 7.425L12.02 1.415L10.607 0L6.01 4.6L1.414 0L0 1.414L6.01 7.425Z" fill="#FE3B1F"/>
+                    </svg>                        
+                </div>
+                <div class="app-body">
+                    <div class="personal">
+                        <h6>Personal Information</h6>
+                        <div class="info-wrapper">
+                            <div class="calling">
+                                <p>First Name</p>
+                                <p>Last Name</p>
+                                <p>E Mail</p>
+                            </div>
+                            <div class="creditals">
+                                <p>${el.first_name}</p>
+                                <p>${el.last_name}</p>
+                                <p>${el.email}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skillset">
+                        <h6>Skillset</h6>
+                        ${
+                            Object.values(el.skills).map(e => {
+                                return(
+                                Object.values(skill_data).map(key => {
+                                    if(e.id === key.id) {
+                                        return `<div class="skill"><span>${key.title}</span><p>Years of Experience: ${e.experience}</p></div>`
+                                    }
+                                }).join('')
+                                )
+                            }).join('')
+                        }
+                    </div>
+                    <div class="covid">
+                        <h6>Covid Situation</h6>
+                        <div class="radio-wrapper">
+                            <p>how would you prefer to work?</p>
+                            <div class="radio-button">
+                                <input class="devtalks radiobtn app-office-${i}" type="radio" name="work" value="from_office">
+                                <label for="work">From Sairme Office</label>
+                            </div>
+                            <div class="radio-button">
+                                <input class="devtalks radiobtn app-home-${i}" type="radio" name="work" value="from_home">
+                                <label for="work">From Home</label>
+                            </div>
+                            <div class="radio-button">
+                                <input class="devtalks radiobtn app-hybrid-${i}" type="radio" name="work" value="hybrid">
+                                <label for="work">Hybrid</label>
+                            </div>
+                        </div>
+                        <div class="radio-wrapper covdiv-${i}">
+                            <p>Did you have covid 19?</p>
+                            <div class="radio-button">
+                                <input class="devtalks radiobtn covid-pos-${i}" type="radio" name="covid" value="yes">
+                                <label for="covid">Yes</label>
+                            </div>
+                            <div class="radio-button">
+                                <input class="devtalks radiobtn covid-neg-${i}" type="radio" name="covid" value="no">
+                                <label for="covid">No</label>
+                            </div>
+                        </div>
+                        <div class="radio-wrapper vacdiv-${i}">
+                            <p>Have you been vaccinated?</p>
+                            <div class="radio-button">
+                                <input class="devtalks radiobtn vacc-pos-${i}" type="radio" name="vaccine" value="yes">
+                                <label for="vaccine">Yes</label>
+                            </div>
+                            <div class="radio-button">
+                                <input class="devtalks radiobtn vacc-neg-${i}" type="radio" name="vaccine" value="no">
+                                <label for="vaccine">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="insights">
+                        <h6>Insigts</h6>
+                        <div class="radio-wrapper devtalk-div-${i}">
+                            <p>Would you attend Devtalks and maybe also organize your own?</p>
+                            <div class="radio-button">
+                                <input class="devtalks radiobtn devtalks-pos-${i}" type="radio" name="devtalks" value="yes">
+                                <label for="devtalks">Yes</label>
+                            </div>
+                            <div class="radio-button">
+                                <input class="devtalks radiobtn devtalks-neg-${i}" type="radio" name="devtalks" value="no">
+                                <label for="devtalks">No</label>
+                            </div>
+                        </div>
+                        <div class="textarea-wrapper">
+                            <p>Tell us somthing special</p>
+                            <textarea name="special textarea">${el.something_special}</textarea>
+                        </div>
+                    </div>
+                </div>
+            `
+            document.querySelector('.main-application-wrapper').appendChild(generatedNode);
+        });
+        const submitList = document.querySelectorAll('.app-header');
+        const bodylist = document.querySelectorAll('.app-body');
+        submitList.forEach((e, i) => {
+            e.addEventListener('click', () => {
+                for(let i = 0; i < submitList.length; i++) {
+                    bodylist[i].classList.remove('active');
+                }
+                bodylist[i].classList.toggle('active');
+
+                // logic section for adding checkmarks
+                if(scopedData[i].phone != null) {
+                    let numdiv = document.createElement('p');
+                    let numpar = document.createElement('p');
+                    numdiv.innerHTML = 
+                    `
+                        <p>${scopedData[i].phone}</p>
+                    `
+                    numpar.innerText = 'Phone';
+                    document.querySelectorAll('.creditals')[i].appendChild(numdiv);
+                    document.querySelectorAll('.calling')[i].appendChild(numpar);
+                }
+                if(scopedData[i].work_preference == 'from_office') {
+                    document.querySelector(`.app-office-${i}`).setAttribute('checked','true');
+                } else if (scopedData[i].work_preference == 'from_home') {
+                    document.querySelector(`.app-home-${i}`).setAttribute('checked','true');
+                } else {
+                    document.querySelector(`.app-hybrid-${i}`).setAttribute('checked','true');
+                }
+                if(scopedData[i].had_covid == true) {
+                    document.querySelector(`.covid-pos-${i}`).setAttribute('checked', 'true');
+                    let covdiv = document.createElement('div');
+                    covdiv.innerHTML = 
+                    `
+                    <div class="input-wrapper">
+                        <p>When did you have covid 19?</p>
+                        <input type="text" name="covid-date" placeholder="${scopedData[i].had_covid_at}">
+                    </div>
+                    `
+                    insertAfter(document.querySelector(`.covdiv-${i}`), covdiv);
+                } else {
+                    document.querySelector(`.covid-neg-${i}`).setAttribute('checked', 'true');
+                }
+                if(scopedData[i].vaccinated == true) {
+                    document.querySelector(`.vacc-pos-${i}`).setAttribute('checked', 'true');
+                    let vacdiv = document.createElement('div');
+                    vacdiv.innerHTML = 
+                    `
+                    <div class="input-wrapper">
+                        <p>When did you get covid vaccine?</p>
+                        <input type="text" name="covid-date" placeholder="${scopedData[i].vaccinated_at}">
+                    </div>
+                    `
+                    insertAfter(document.querySelector(`.vacdiv-${i}`), vacdiv);
+                } else {
+                    document.querySelector(`.vacc-neg-${i}`).setAttribute('checked', 'true');
+                }
+                if(scopedData[i].will_organize_devtalk == true) {
+                    document.querySelector(`.devtalks-pos-${i}`).setAttribute('checked', 'true');
+                    let devt = document.createElement('div');
+                    devt.innerHTML = 
+                    `
+                    <div class="textarea-wrapper">
+                        <p>What would you speak about at Devtalk?</p>
+                        <textarea name="devtalks textarea">${scopedData[i].devtalk_topic}</textarea>
+                    </div>
+                    `
+                    insertAfter(document.querySelector(`.devtalk-div-${i}`), devt);
+                } else {
+                    document.querySelector(`.devtalks-neg-${i}`).setAttribute('checked', 'true');
+                }
+            });
+        });
+    });
+}
+
+const insertAfter = (referenceNode, newNode) => {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}

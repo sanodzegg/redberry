@@ -53,6 +53,7 @@ body {
         }
     }
     img {
+        user-select: none;
         width: 37.525%;
         min-width: 25.577rem;
     }
@@ -302,7 +303,7 @@ body {
         background-color: $redberry-red;
         font-size: 2.25rem;
         line-height: 2.75rem;
-        border-radius: 3.125;
+        border-radius: 3.125rem;
         color: $primary-white;
     }
     p {
@@ -311,6 +312,159 @@ body {
         line-height: 2.125rem;
         text-decoration: underline;
         color: $primary-white;
+    }
+    .defaultHeading {
+        margin: 0;
+        text-align: center;
+        font-size: 4rem;
+        line-height: 4.87;
+        color: $redberry-red;
+        font-family: 'Rowdies', cursive;
+    }
+}
+
+.submitted-section {
+    width: 1154px;
+    max-width: 100%;
+    margin: 0 auto;
+    h3 {
+        font-family: 'Rowdies', cursive;
+        color: $primary-white;
+        font-size: 3.5rem;
+        line-height: 4.35rem;
+    }
+    .app-wrapper {
+        margin: .5rem 0;
+        .app-header {
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            display: flex;
+            background-color: $redberry-red;
+            padding: .75rem 1.25rem;
+            cursor: pointer;
+            span {
+                font-weight: lighter;
+                font-family: 'Rowdies', cursive;
+                font-size: 0.875rem;
+                line-height: 1rem;
+                color: $primary-white;
+            }
+            path {
+                fill: $primary-white;
+            }
+        }
+        .app-body {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            height: 0;
+            overflow: hidden;
+            background-color: $primary-white;
+            .radiobtn {
+                pointer-events: none;
+                accent-color: $primary-grey;
+            }
+            .radio-button {
+                margin: .3rem 0;
+            }
+            h6 {
+                font-style: italic;
+                text-decoration: underline;
+                color: $redberry-red;
+                font-size: 1.125rem;
+                line-height: 1.37rem;
+                text-transform: capitalize;
+            }
+            .personal, .skillset, .insights, .covid {
+                flex: 1 50%;
+            }
+            .personal, .covid {
+                display: flex;
+                align-items: flex-start;
+                flex-direction: column;
+                padding-left: 10rem;
+                .info-wrapper {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 75%;
+                    p {
+                        color: $primary-black;
+                        font-size: .75rem;
+                        white-space: nowrap;
+                        font-style: italic;
+                        font-weight: 400;
+                    }
+                    .creditals {
+                        p {
+                            color: $primary-grey;
+                        }
+                    }
+                }
+                p {
+                    font-size: 1.125rem;
+                }
+                label {
+                    font-size: .875rem;
+                }
+                input[type=text] {
+                    width: 390px;
+                    max-width: 100%;
+                    border: 1px $primary-stroke solid;
+                    padding: .875rem 1.37rem;
+                    position: relative;
+                    background: url(../media/svg/calendar.svg) no-repeat 95% 50%;
+                    pointer-events: none;
+                }
+            }
+            .skillset, .insights {
+                display: flex;
+                align-items: flex-start;
+                flex-direction: column;
+                padding-right: 10rem;
+                padding-left: 3rem;
+                .skill {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 70%;
+                }
+                span {
+                    font-style: italic;
+                }
+                p {
+                    font-size: .875rem;
+                    font-style: italic;
+                    margin: .5rem 0;
+                }
+            }
+            .insights {
+                p:nth-child(1) {
+                    margin-top: unset;
+                    font-size: 1.125rem;
+                    font-style: normal;
+                }
+                .textarea-wrapper {
+                    margin-top: 4.5rem;
+                    textarea {
+                        pointer-events: none;
+                        font-family: 'Montserrat', sans-serif;
+                        width: 369px;
+                        height: 122px;
+                        max-width: 100%;
+                        display: block;
+                        resize: none;
+                        border: 1px $primary-stroke solid;
+                        padding: 1.5rem;
+                    }
+                }
+            }
+        }
+        .active {
+            height: unset;
+            padding-bottom: 2rem;
+        }
     }
 }
 
