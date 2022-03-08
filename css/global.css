@@ -806,9 +806,37 @@ body {
   background-color: #FFF;
 }
 
+.submitted-section .app-wrapper .app-body .radio-button {
+  position: relative;
+}
+
 .submitted-section .app-wrapper .app-body .radiobtn {
   pointer-events: none;
   accent-color: #454545;
+  opacity: 0;
+  display: none;
+}
+
+.submitted-section .app-wrapper .app-body .checkmark {
+  position: absolute;
+  top: 6px;
+  left: -17px;
+  height: 13px;
+  width: 13px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px #000 solid;
+}
+
+.submitted-section .app-wrapper .app-body .checkmark .inner-checkmark {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: 7px;
+  width: 7px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px #000 solid;
 }
 
 .submitted-section .app-wrapper .app-body .radio-button {
@@ -920,6 +948,10 @@ body {
   font-size: .875rem;
   font-style: italic;
   margin: .5rem 0;
+}
+
+.submitted-section .app-wrapper .app-body .skillset label, .submitted-section .app-wrapper .app-body .insights label {
+  font-size: .875rem;
 }
 
 .submitted-section .app-wrapper .app-body .insights p:nth-child(1) {

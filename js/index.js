@@ -542,11 +542,13 @@ const getData = () => {
                                 <p>First Name</p>
                                 <p>Last Name</p>
                                 <p>E Mail</p>
+                                <p class=num-active${i}></p>
                             </div>
                             <div class="creditals">
                                 <p>${el.first_name}</p>
                                 <p>${el.last_name}</p>
                                 <p>${el.email}</p>
+                                <p class="num${i}"></p>
                             </div>
                         </div>
                     </div>
@@ -568,54 +570,60 @@ const getData = () => {
                         <h6>Covid Situation</h6>
                         <div class="radio-wrapper">
                             <p>how would you prefer to work?</p>
-                            <div class="radio-button">
-                                <input class="devtalks radiobtn app-office-${i}" type="radio" name="work" value="from_office">
+                            <div class="radio-button app-office-${i}">
+                                <input class="radiobtn" type="radio" name="work" value="from_office">
                                 <label for="work">From Sairme Office</label>
                             </div>
-                            <div class="radio-button">
-                                <input class="devtalks radiobtn app-home-${i}" type="radio" name="work" value="from_home">
+                            <div class="radio-button app-home-${i}">
+                                <input class="radiobtn" type="radio" name="work" value="from_home">
                                 <label for="work">From Home</label>
                             </div>
-                            <div class="radio-button">
-                                <input class="devtalks radiobtn app-hybrid-${i}" type="radio" name="work" value="hybrid">
+                            <div class="radio-button app-hybrid-${i}">
+                                <input class="radiobtn" type="radio" name="work" value="hybrid">
                                 <label for="work">Hybrid</label>
                             </div>
                         </div>
-                        <div class="radio-wrapper covdiv-${i}">
+                        <div class="radio-wrapper">
                             <p>Did you have covid 19?</p>
-                            <div class="radio-button">
-                                <input class="devtalks radiobtn covid-pos-${i}" type="radio" name="covid" value="yes">
+                            <div class="radio-button covid-pos-${i}">
+                                <input class="radiobtn" type="radio" name="covid" value="yes">
                                 <label for="covid">Yes</label>
                             </div>
-                            <div class="radio-button">
-                                <input class="devtalks radiobtn covid-neg-${i}" type="radio" name="covid" value="no">
+                            <div class="radio-button covid-neg-${i}">
+                                <input class="radiobtn" type="radio" name="covid" value="no">
                                 <label for="covid">No</label>
                             </div>
+                            <div class="input-holder covdiv-${i}">
+                            </div>
                         </div>
-                        <div class="radio-wrapper vacdiv-${i}">
+                        <div class="radio-wrapper">
                             <p>Have you been vaccinated?</p>
-                            <div class="radio-button">
-                                <input class="devtalks radiobtn vacc-pos-${i}" type="radio" name="vaccine" value="yes">
+                            <div class="radio-button vacc-pos-${i}">
+                                <input class="radiobtn" type="radio" name="vaccine" value="yes">
                                 <label for="vaccine">Yes</label>
                             </div>
-                            <div class="radio-button">
-                                <input class="devtalks radiobtn vacc-neg-${i}" type="radio" name="vaccine" value="no">
+                            <div class="radio-button vacc-neg-${i}">
+                                <input class="radiobtn" type="radio" name="vaccine" value="no">
                                 <label for="vaccine">No</label>
                             </div>
+                        </div>
+                        <div class="input-holder vacdiv-${i}">
                         </div>
                     </div>
                     <div class="insights">
                         <h6>Insigts</h6>
-                        <div class="radio-wrapper devtalk-div-${i}">
+                        <div class="radio-wrapper">
                             <p>Would you attend Devtalks and maybe also organize your own?</p>
-                            <div class="radio-button">
-                                <input class="devtalks radiobtn devtalks-pos-${i}" type="radio" name="devtalks" value="yes">
+                            <div class="radio-button devtalks-pos-${i}">
+                                <input class="devtalks radiobtn" type="radio" name="devtalks" value="yes">
                                 <label for="devtalks">Yes</label>
                             </div>
-                            <div class="radio-button">
-                                <input class="devtalks radiobtn devtalks-neg-${i}" type="radio" name="devtalks" value="no">
+                            <div class="radio-button devtalks-neg-${i}">
+                                <input class="devtalks radiobtn" type="radio" name="devtalks" value="no">
                                 <label for="devtalks">No</label>
                             </div>
+                        </div>
+                        <div class="input-holder devtalk-div-${i}">
                         </div>
                         <div class="textarea-wrapper">
                             <p>Tell us somthing special</p>
@@ -632,69 +640,132 @@ const getData = () => {
             e.addEventListener('click', () => {
                 for(let i = 0; i < submitList.length; i++) {
                     bodylist[i].classList.remove('active');
+                    submitList[i].style.pointerEvents = 'all';
                 }
+                e.style.pointerEvents = 'none';
                 bodylist[i].classList.toggle('active');
 
-                // logic section for adding checkmarks
+                // logic section for adding checkmark
+                // least fun i've ever had
                 if(scopedData[i].phone != null) {
                     let numdiv = document.createElement('p');
-                    let numpar = document.createElement('p');
                     numdiv.innerHTML = 
                     `
-                        <p>${scopedData[i].phone}</p>
+                        ${scopedData[i].phone}
                     `
-                    numpar.innerText = 'Phone';
-                    document.querySelectorAll('.creditals')[i].appendChild(numdiv);
-                    document.querySelectorAll('.calling')[i].appendChild(numpar);
+                    document.querySelector(`.num${i}`).innerHTML = numdiv.innerText;
+                    document.querySelector(`.num-active${i}`).innerText = 'Phone';
+                } else {
+                    try {
+                        document.querySelector(`.num-active${i}`).remove();
+                    } catch(err) {}
                 }
                 if(scopedData[i].work_preference == 'from_office') {
-                    document.querySelector(`.app-office-${i}`).setAttribute('checked','true');
+                    document.querySelector(`.app-office-${i}`).innerHTML =
+                    `
+                    <input class="radiobtn" type="radio" name="work" value="from_office">
+                        <span class="checkmark">
+                            <span class="inner-checkmark"></span>
+                        </span>
+                    <label for="work">From Sairme Office</label>
+                    `;
                 } else if (scopedData[i].work_preference == 'from_home') {
-                    document.querySelector(`.app-home-${i}`).setAttribute('checked','true');
+                    document.querySelector(`.app-home-${i}`).innerHTML =
+                    `
+                    <input class="radiobtn" type="radio" name="work" value="from_home">
+                        <span class="checkmark">
+                            <span class="inner-checkmark"></span>
+                        </span>
+                    <label for="work">From Home</label>
+                    `
+                    ;
                 } else {
-                    document.querySelector(`.app-hybrid-${i}`).setAttribute('checked','true');
+                    document.querySelector(`.app-hybrid-${i}`).innerHTML = 
+                    `
+                    <input class="radiobtn" type="radio" name="work" value="hybrid">
+                        <span class="checkmark">
+                            <span class="inner-checkmark"></span>
+                        </span>
+                    <label for="work">Hybrid</label>
+                    `
                 }
                 if(scopedData[i].had_covid == true) {
-                    document.querySelector(`.covid-pos-${i}`).setAttribute('checked', 'true');
-                    let covdiv = document.createElement('div');
-                    covdiv.innerHTML = 
+                    document.querySelector(`.covid-pos-${i}`).innerHTML = 
+                    `
+                    <input class="radiobtn" type="radio" name="covid" value="yes">
+                        <span class="checkmark">
+                            <span class="inner-checkmark"></span>
+                        </span>
+                    <label for="covid">Yes</label>
+                    `;
+                    document.querySelector(`.covdiv-${i}`).innerHTML = 
                     `
                     <div class="input-wrapper">
                         <p>When did you have covid 19?</p>
                         <input type="text" name="covid-date" placeholder="${scopedData[i].had_covid_at}">
                     </div>
                     `
-                    insertAfter(document.querySelector(`.covdiv-${i}`), covdiv);
                 } else {
-                    document.querySelector(`.covid-neg-${i}`).setAttribute('checked', 'true');
+                    document.querySelector(`.covid-neg-${i}`).innerHTML = 
+                    `
+                    <input class="radiobtn" type="radio" name="covid" value="no">
+                        <span class="checkmark">
+                            <span class="inner-checkmark"></span>
+                        </span>
+                    <label for="covid">No</label>
+                    `;
                 }
                 if(scopedData[i].vaccinated == true) {
-                    document.querySelector(`.vacc-pos-${i}`).setAttribute('checked', 'true');
-                    let vacdiv = document.createElement('div');
-                    vacdiv.innerHTML = 
+                    document.querySelector(`.vacc-pos-${i}`).innerHTML = 
+                    `
+                    <input class="radiobtn" type="radio" name="vaccine" value="yes">
+                        <span class="checkmark">
+                            <span class="inner-checkmark"></span>
+                        </span>
+                    <label for="vaccine">Yes</label>
+                    `;
+                    document.querySelector(`.vacdiv-${i}`).innerHTML = 
                     `
                     <div class="input-wrapper">
                         <p>When did you get covid vaccine?</p>
                         <input type="text" name="covid-date" placeholder="${scopedData[i].vaccinated_at}">
                     </div>
                     `
-                    insertAfter(document.querySelector(`.vacdiv-${i}`), vacdiv);
                 } else {
-                    document.querySelector(`.vacc-neg-${i}`).setAttribute('checked', 'true');
+                    document.querySelector(`.vacc-neg-${i}`).innerHTML = 
+                    `
+                    <input class="radiobtn" type="radio" name="vaccine" value="no">
+                        <span class="checkmark">
+                            <span class="inner-checkmark"></span>
+                        </span>
+                    <label for="vaccine">No</label>
+                    `;
                 }
                 if(scopedData[i].will_organize_devtalk == true) {
-                    document.querySelector(`.devtalks-pos-${i}`).setAttribute('checked', 'true');
-                    let devt = document.createElement('div');
-                    devt.innerHTML = 
+                    document.querySelector(`.devtalks-pos-${i}`).innerHTML = 
                     `
-                    <div class="textarea-wrapper">
-                        <p>What would you speak about at Devtalk?</p>
-                        <textarea name="devtalks textarea">${scopedData[i].devtalk_topic}</textarea>
-                    </div>
+                        <input class="devtalks radiobtn" type="radio" name="devtalks" value="yes">
+                            <span class="checkmark">
+                                <span class="inner-checkmark"></span>
+                            </span>
+                        <label for="devtalks">Yes</label>
+                    `;
+                    document.querySelector(`.devtalk-div-${i}`).innerHTML = 
                     `
-                    insertAfter(document.querySelector(`.devtalk-div-${i}`), devt);
+                        <div class="textarea-wrapper">
+                            <p>What would you speak about at Devtalk?</p>
+                            <textarea name="devtalks textarea">${scopedData[i].devtalk_topic}</textarea>
+                        </div>
+                    `
                 } else {
-                    document.querySelector(`.devtalks-neg-${i}`).setAttribute('checked', 'true');
+                    document.querySelector(`.devtalks-neg-${i}`).innerHTML = 
+                    `
+                        <input class="devtalks radiobtn" type="radio" name="devtalks" value="no">
+                            <span class="checkmark">
+                                <span class="inner-checkmark"></span>
+                            </span>
+                        <label for="devtalks">No</label>
+                    `;
                 }
             });
         });

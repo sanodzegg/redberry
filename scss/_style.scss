@@ -362,9 +362,34 @@ body {
             height: 0;
             overflow: hidden;
             background-color: $primary-white;
+            .radio-button {
+                position: relative;
+            }
             .radiobtn {
                 pointer-events: none;
                 accent-color: $primary-grey;
+                opacity: 0;
+                display: none;
+            }
+            .checkmark {
+                position: absolute;
+                top: 6px;
+                left: -17px;
+                height: 13px;
+                width: 13px;
+                background-color: white;
+                border-radius: 50%;
+                border: 1px $primary-black solid;
+                .inner-checkmark {
+                    position: absolute;
+                    top: 2px;
+                    left: 2px;
+                    height: 7px;
+                    width: 7px;
+                    background-color: white;
+                    border-radius: 50%;
+                    border: 1px $primary-black solid;
+                }
             }
             .radio-button {
                 margin: .3rem 0;
@@ -437,6 +462,9 @@ body {
                     font-size: .875rem;
                     font-style: italic;
                     margin: .5rem 0;
+                }
+                label {
+                    font-size: .875rem;
                 }
             }
             .insights {
