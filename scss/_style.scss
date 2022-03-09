@@ -2,7 +2,7 @@
 @import "./variables";
 
 body {
-    height: 100%;
+    height: 100vh;
     background: url(../media/png/stars.png), $primary-bg;
     background-position: center;
     overflow: hidden;
