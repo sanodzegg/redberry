@@ -299,7 +299,7 @@ textarea,
 @-webkit-keyframes slideup {
   0% {
     top: 100%;
-    left: 50%;
+    left: 51%;
     -webkit-transform: translate(-100%, -50%);
             transform: translate(-100%, -50%);
   }
@@ -314,7 +314,7 @@ textarea,
 @keyframes slideup {
   0% {
     top: 100%;
-    left: 50%;
+    left: 51%;
     -webkit-transform: translate(-100%, -50%);
             transform: translate(-100%, -50%);
   }

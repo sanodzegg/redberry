@@ -1,5 +1,6 @@
 // api
 const TOKEN = '2b1386d4-06ae-4825-81fe-3f2869760ced';
+
 // regex
 const mail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -43,8 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let count = 0;
     let skill_arr = [0, 1];
-    // this is for data object 
-    let skills = [];
 
     document.getElementById('start').onclick = () => {
         document.body.style.background = 'unset';
@@ -61,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
             node.value = node.value.replace(/-/g, "").match(/.{1,3}/g).join('-');
             data.phone = `+995${node.value.replace(/-/g, "")}`
         } catch(err) {
+            delete data.phone;
             let popup = document.createElement('div');
             popup.setAttribute('class', 'number-popup');
             let span = document.createElement('span');
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }
-        removers.forEach((e, i) => {
+        removers.forEach(e => {
             e.addEventListener('click', function() {
                 for(let i = 0; i < options.length; i++) {
                     if(e.parentNode.childNodes[1].innerText == options[i].innerText) {
@@ -125,14 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         languageAddBtn.style.pointerEvents = 'all';
                     }
                 }
-                skills.splice(i, 1);
-                skills = skills.filter((el) => {
-                    return el != null;
-                });
-                // data.skills = [skills];
                 e.parentNode.remove();
-                // removers = document.querySelectorAll('.removeLang');
-                
                 if(document.querySelectorAll('.removeLang').length < 1) {
                     skills_err.exppoints = false;
                     validator(skills_err, 1);
@@ -701,6 +694,7 @@ const getData = async () => {
                 document.querySelector(`.num-active${i}`).innerText = 'Phone';
             } else {
                 try {
+                    document.querySelector(`.num${i}`).remove();
                     document.querySelector(`.num-active${i}`).remove();
                 } catch(err) {
                 }
