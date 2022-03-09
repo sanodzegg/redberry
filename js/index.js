@@ -61,7 +61,18 @@ document.addEventListener("DOMContentLoaded", () => {
             node.value = node.value.replace(/-/g, "").match(/.{1,3}/g).join('-');
             data.phone = `+995${node.value.replace(/-/g, "")}`
         } catch(err) {
-            // maybe a popup?
+            let popup = document.createElement('div');
+            popup.setAttribute('class', 'number-popup');
+            let span = document.createElement('span');
+            span.innerText = "Adding a phone number would be a great addition to your application 😏";
+            popup.appendChild(span);
+            document.querySelector('.form-section').appendChild(popup);
+            setTimeout(() => {
+                popup.style.animation = 'fadeout .5s forwards';
+                setTimeout(() => {
+                    popup.remove();
+                }, 500);
+            }, 2500);
         }
     });
 
@@ -483,7 +494,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector('.home-view').classList.add('hidden');
         document.querySelector('.submitted-section').classList.remove('hidden');
         getData();
-
+        document.body.style.overflow = 'auto';
     });
 
 });
@@ -517,257 +528,271 @@ const sendData = () => {
     })
 }
 
-const getData = () => {
+const getData = async () => {
     let scopedData = [];
-    fetch(`https://bootcamp-2022.devtest.ge/api/applications?token=${TOKEN}`)
-    .then(res => res.json())
-    .then(data => {
-        data.forEach((el, i) => {
+    let res = await fetch(`https://bootcamp-2022.devtest.ge/api/applications?token=${TOKEN}`);
+    let data = await res.json();
+    data.forEach((el, i) => {
             scopedData.push(el);
+            // main div wrapper
             let generatedNode = document.createElement('div');
             generatedNode.setAttribute('class', 'app-wrapper');
-            generatedNode.innerHTML = 
-            `
-                <div class="app-header">
-                    <span>${i+1}</span>
-                    <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.01 7.425L12.02 1.415L10.607 0L6.01 4.6L1.414 0L0 1.414L6.01 7.425Z" fill="#FE3B1F"/>
-                    </svg>                        
-                </div>
-                <div class="app-body">
-                    <div class="personal">
-                        <h6>Personal Information</h6>
-                        <div class="info-wrapper">
-                            <div class="calling">
-                                <p>First Name</p>
-                                <p>Last Name</p>
-                                <p>E Mail</p>
-                                <p class=num-active${i}></p>
-                            </div>
-                            <div class="creditals">
-                                <p>${el.first_name}</p>
-                                <p>${el.last_name}</p>
-                                <p>${el.email}</p>
-                                <p class="num${i}"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="skillset">
-                        <h6>Skillset</h6>
-                        ${
-                            Object.values(el.skills).map(e => {
-                                return(
-                                Object.values(skill_data).map(key => {
-                                    if(e.id === key.id) {
-                                        return `<div class="skill"><span>${key.title}</span><p>Years of Experience: ${e.experience}</p></div>`
-                                    }
-                                }).join('')
-                                )
-                            }).join('')
-                        }
-                    </div>
-                    <div class="covid">
-                        <h6>Covid Situation</h6>
-                        <div class="radio-wrapper">
-                            <p>how would you prefer to work?</p>
-                            <div class="radio-button app-office-${i}">
-                                <input class="radiobtn" type="radio" name="work" value="from_office">
-                                <label for="work">From Sairme Office</label>
-                            </div>
-                            <div class="radio-button app-home-${i}">
-                                <input class="radiobtn" type="radio" name="work" value="from_home">
-                                <label for="work">From Home</label>
-                            </div>
-                            <div class="radio-button app-hybrid-${i}">
-                                <input class="radiobtn" type="radio" name="work" value="hybrid">
-                                <label for="work">Hybrid</label>
-                            </div>
-                        </div>
-                        <div class="radio-wrapper">
-                            <p>Did you have covid 19?</p>
-                            <div class="radio-button covid-pos-${i}">
-                                <input class="radiobtn" type="radio" name="covid" value="yes">
-                                <label for="covid">Yes</label>
-                            </div>
-                            <div class="radio-button covid-neg-${i}">
-                                <input class="radiobtn" type="radio" name="covid" value="no">
-                                <label for="covid">No</label>
-                            </div>
-                            <div class="input-holder covdiv-${i}">
-                            </div>
-                        </div>
-                        <div class="radio-wrapper">
-                            <p>Have you been vaccinated?</p>
-                            <div class="radio-button vacc-pos-${i}">
-                                <input class="radiobtn" type="radio" name="vaccine" value="yes">
-                                <label for="vaccine">Yes</label>
-                            </div>
-                            <div class="radio-button vacc-neg-${i}">
-                                <input class="radiobtn" type="radio" name="vaccine" value="no">
-                                <label for="vaccine">No</label>
-                            </div>
-                        </div>
-                        <div class="input-holder vacdiv-${i}">
-                        </div>
-                    </div>
-                    <div class="insights">
-                        <h6>Insigts</h6>
-                        <div class="radio-wrapper">
-                            <p>Would you attend Devtalks and maybe also organize your own?</p>
-                            <div class="radio-button devtalks-pos-${i}">
-                                <input class="devtalks radiobtn" type="radio" name="devtalks" value="yes">
-                                <label for="devtalks">Yes</label>
-                            </div>
-                            <div class="radio-button devtalks-neg-${i}">
-                                <input class="devtalks radiobtn" type="radio" name="devtalks" value="no">
-                                <label for="devtalks">No</label>
-                            </div>
-                        </div>
-                        <div class="input-holder devtalk-div-${i}">
-                        </div>
-                        <div class="textarea-wrapper">
-                            <p>Tell us somthing special</p>
-                            <textarea name="special textarea">${el.something_special}</textarea>
-                        </div>
-                    </div>
-                </div>
-            `
             document.querySelector('.main-application-wrapper').appendChild(generatedNode);
-        });
-        const submitList = document.querySelectorAll('.app-header');
-        const bodylist = document.querySelectorAll('.app-body');
-        submitList.forEach((e, i) => {
-            e.addEventListener('click', () => {
-                for(let i = 0; i < submitList.length; i++) {
-                    bodylist[i].classList.remove('active');
-                    submitList[i].style.pointerEvents = 'all';
-                }
-                e.style.pointerEvents = 'none';
-                bodylist[i].classList.toggle('active');
+            // header
+            let generatedHeader = document.createElement('div');
+            generatedHeader.setAttribute('class', 'app-header');
+            generatedNode.appendChild(generatedHeader);
+            let numeric = document.createElement('span');
+            numeric.innerText = i+1;
+            generatedHeader.appendChild(numeric);
+            let scrollArrow = document.createElement('svg');
+            generatedHeader.appendChild(scrollArrow);
+            scrollArrow.outerHTML = `<svg class="scrollDown-arrow" width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.01 7.425L12.02 1.415L10.607 0L6.01 4.6L1.414 0L0 1.414L6.01 7.425Z" fill="#FE3B1F"/>
+            </svg>`
+            // body
+            let generatedBody = document.createElement('div');
+            generatedBody.setAttribute('class', 'app-body');
+            generatedNode.appendChild(generatedBody);
 
-                // logic section for adding checkmark
-                // least fun i've ever had
-                if(scopedData[i].phone != null) {
-                    let numdiv = document.createElement('p');
-                    numdiv.innerHTML = 
-                    `
-                        ${scopedData[i].phone}
-                    `
-                    document.querySelector(`.num${i}`).innerHTML = numdiv.innerText;
-                    document.querySelector(`.num-active${i}`).innerText = 'Phone';
-                } else {
-                    try {
-                        document.querySelector(`.num-active${i}`).remove();
-                    } catch(err) {}
-                }
-                if(scopedData[i].work_preference == 'from_office') {
-                    document.querySelector(`.app-office-${i}`).innerHTML =
-                    `
-                    <input class="radiobtn" type="radio" name="work" value="from_office">
-                        <span class="checkmark">
-                            <span class="inner-checkmark"></span>
-                        </span>
-                    <label for="work">From Sairme Office</label>
-                    `;
-                } else if (scopedData[i].work_preference == 'from_home') {
-                    document.querySelector(`.app-home-${i}`).innerHTML =
-                    `
-                    <input class="radiobtn" type="radio" name="work" value="from_home">
-                        <span class="checkmark">
-                            <span class="inner-checkmark"></span>
-                        </span>
-                    <label for="work">From Home</label>
-                    `
-                    ;
-                } else {
-                    document.querySelector(`.app-hybrid-${i}`).innerHTML = 
-                    `
-                    <input class="radiobtn" type="radio" name="work" value="hybrid">
-                        <span class="checkmark">
-                            <span class="inner-checkmark"></span>
-                        </span>
-                    <label for="work">Hybrid</label>
-                    `
-                }
-                if(scopedData[i].had_covid == true) {
-                    document.querySelector(`.covid-pos-${i}`).innerHTML = 
-                    `
-                    <input class="radiobtn" type="radio" name="covid" value="yes">
-                        <span class="checkmark">
-                            <span class="inner-checkmark"></span>
-                        </span>
-                    <label for="covid">Yes</label>
-                    `;
-                    document.querySelector(`.covdiv-${i}`).innerHTML = 
-                    `
-                    <div class="input-wrapper">
-                        <p>When did you have covid 19?</p>
-                        <input type="text" name="covid-date" placeholder="${scopedData[i].had_covid_at}">
+            // general flex module
+            let personal = document.createElement('div');
+            let skillset = document.createElement('div');
+            let covid = document.createElement('div');
+            let insights = document.createElement('div');
+            personal.setAttribute('class', 'personal module');
+            skillset.setAttribute('class', 'skillset module');
+            covid.setAttribute('class', 'covid module');
+            insights.setAttribute('class', 'insights module');
+            generatedBody.appendChild(personal);
+            generatedBody.appendChild(skillset);
+            generatedBody.appendChild(covid);
+            generatedBody.appendChild(insights);
+            personal.innerHTML =
+            `
+                <h6>Personal Information</h6>
+                <div class="info-wrapper">
+                    <div class="calling">
+                        <p>First Name</p>
+                        <p>Last Name</p>
+                        <p>E Mail</p>
+                        <p class=num-active${i}></p>
                     </div>
-                    `
-                } else {
-                    document.querySelector(`.covid-neg-${i}`).innerHTML = 
-                    `
-                    <input class="radiobtn" type="radio" name="covid" value="no">
-                        <span class="checkmark">
-                            <span class="inner-checkmark"></span>
-                        </span>
-                    <label for="covid">No</label>
-                    `;
-                }
-                if(scopedData[i].vaccinated == true) {
-                    document.querySelector(`.vacc-pos-${i}`).innerHTML = 
-                    `
-                    <input class="radiobtn" type="radio" name="vaccine" value="yes">
-                        <span class="checkmark">
-                            <span class="inner-checkmark"></span>
-                        </span>
-                    <label for="vaccine">Yes</label>
-                    `;
-                    document.querySelector(`.vacdiv-${i}`).innerHTML = 
-                    `
-                    <div class="input-wrapper">
-                        <p>When did you get covid vaccine?</p>
-                        <input type="text" name="covid-date" placeholder="${scopedData[i].vaccinated_at}">
+                    <div class="creditals">
+                        <p>${el.first_name}</p>
+                        <p>${el.last_name}</p>
+                        <p>${el.email}</p>
+                        <p class="num${i}"></p>
                     </div>
-                    `
-                } else {
-                    document.querySelector(`.vacc-neg-${i}`).innerHTML = 
-                    `
-                    <input class="radiobtn" type="radio" name="vaccine" value="no">
-                        <span class="checkmark">
-                            <span class="inner-checkmark"></span>
-                        </span>
-                    <label for="vaccine">No</label>
-                    `;
+                </div>
+            `;
+            skillset.innerHTML = 
+            `
+                <h6>Skillset</h6>
+                ${
+                    Object.values(el.skills).map(e => {
+                        return(
+                        Object.values(skill_data).map(key => {
+                            if(e.id === key.id) {
+                                return `<div class="skill"><span>${key.title}</span><p>Years of Experience: ${e.experience}</p></div>`
+                            }
+                        }).join('')
+                        )
+                    }).join('')
                 }
-                if(scopedData[i].will_organize_devtalk == true) {
-                    document.querySelector(`.devtalks-pos-${i}`).innerHTML = 
-                    `
+            `;
+            covid.innerHTML =
+            `
+                <h6>Covid Situation</h6>
+                <div class="radio-wrapper">
+                    <p>how would you prefer to work?</p>
+                    <div class="radio-button app-office-${i}">
+                        <input class="radiobtn" type="radio" name="work" value="from_office">
+                        <label for="work">From Sairme Office</label>
+                    </div>
+                    <div class="radio-button app-home-${i}">
+                        <input class="radiobtn" type="radio" name="work" value="from_home">
+                        <label for="work">From Home</label>
+                    </div>
+                    <div class="radio-button app-hybrid-${i}">
+                        <input class="radiobtn" type="radio" name="work" value="hybrid">
+                        <label for="work">Hybrid</label>
+                    </div>
+                </div>
+                <div class="radio-wrapper">
+                    <p>Did you have covid 19?</p>
+                    <div class="radio-button covid-pos-${i}">
+                        <input class="radiobtn" type="radio" name="covid" value="yes">
+                        <label for="covid">Yes</label>
+                    </div>
+                    <div class="radio-button covid-neg-${i}">
+                        <input class="radiobtn" type="radio" name="covid" value="no">
+                        <label for="covid">No</label>
+                    </div>
+                    <div class="input-holder covdiv-${i}">
+                    </div>
+                </div>
+                <div class="radio-wrapper">
+                    <p>Have you been vaccinated?</p>
+                    <div class="radio-button vacc-pos-${i}">
+                        <input class="radiobtn" type="radio" name="vaccine" value="yes">
+                        <label for="vaccine">Yes</label>
+                    </div>
+                    <div class="radio-button vacc-neg-${i}">
+                        <input class="radiobtn" type="radio" name="vaccine" value="no">
+                        <label for="vaccine">No</label>
+                    </div>
+                </div>
+                <div class="input-holder vacdiv-${i}">
+                </div>
+            `;
+            insights.innerHTML =
+            `
+                <h6>Insigts</h6>
+                <div class="radio-wrapper">
+                    <p>Would you attend Devtalks and maybe also organize your own?</p>
+                    <div class="radio-button devtalks-pos-${i}">
                         <input class="devtalks radiobtn" type="radio" name="devtalks" value="yes">
-                            <span class="checkmark">
-                                <span class="inner-checkmark"></span>
-                            </span>
                         <label for="devtalks">Yes</label>
-                    `;
-                    document.querySelector(`.devtalk-div-${i}`).innerHTML = 
-                    `
-                        <div class="textarea-wrapper">
-                            <p>What would you speak about at Devtalk?</p>
-                            <textarea name="devtalks textarea">${scopedData[i].devtalk_topic}</textarea>
-                        </div>
-                    `
-                } else {
-                    document.querySelector(`.devtalks-neg-${i}`).innerHTML = 
-                    `
+                    </div>
+                    <div class="radio-button devtalks-neg-${i}">
                         <input class="devtalks radiobtn" type="radio" name="devtalks" value="no">
-                            <span class="checkmark">
-                                <span class="inner-checkmark"></span>
-                            </span>
                         <label for="devtalks">No</label>
-                    `;
+                    </div>
+                </div>
+                <div class="input-holder devtalk-div-${i}">
+                </div>
+                <div class="textarea-wrapper">
+                    <p>Tell us somthing special</p>
+                    <textarea name="special textarea">${el.something_special}</textarea>
+                </div>
+            `
+        });
+    const submitList = document.querySelectorAll('.app-header');
+    const bodylist = document.querySelectorAll('.app-body');
+
+    // custom checkmark
+    let checkmark = document.createElement('span');
+    let inner = document.createElement('span');
+    checkmark.classList.add('checkmark');
+    inner.classList.add('inner-checkmark');
+    checkmark.appendChild(inner);
+
+    submitList.forEach((e, i) => {
+        e.addEventListener('click', () => {
+            for(let i = 0; i < submitList.length; i++) {
+                bodylist[i].classList.remove('active');
+                submitList[i].style.pointerEvents = 'all';
+                document.querySelectorAll('.scrollDown-arrow')[i].classList.remove('active-svg');
+            }
+            e.style.pointerEvents = 'none';
+            bodylist[i].classList.toggle('active');
+            document.querySelectorAll('.scrollDown-arrow')[i].classList.add('active-svg');
+
+            // logic section for adding checkmark
+            // least fun i've ever had
+            if(scopedData[i].phone != null) {
+                let numdiv = document.createElement('p');
+                numdiv.innerHTML = 
+                `
+                    ${scopedData[i].phone}
+                `
+                document.querySelector(`.num${i}`).innerHTML = numdiv.innerText;
+                document.querySelector(`.num-active${i}`).innerText = 'Phone';
+            } else {
+                try {
+                    document.querySelector(`.num-active${i}`).remove();
+                } catch(err) {
                 }
-            });
+            }
+            if(scopedData[i].work_preference == 'from_office') {
+                document.querySelector(`.app-office-${i}`).innerHTML =
+                `
+                <input class="radiobtn" type="radio" name="work" value="from_office">
+                ${checkmark.outerHTML}
+                <label for="work">From Sairme Office</label>
+                `;
+            } else if (scopedData[i].work_preference == 'from_home') {
+                document.querySelector(`.app-home-${i}`).innerHTML =
+                `
+                <input class="radiobtn" type="radio" name="work" value="from_home">
+                ${checkmark.outerHTML}
+                <label for="work">From Home</label>
+                `;
+            } else {
+                document.querySelector(`.app-hybrid-${i}`).innerHTML = 
+                `
+                <input class="radiobtn" type="radio" name="work" value="hybrid">
+                ${checkmark.outerHTML}
+                <label for="work">Hybrid</label>
+                `;
+            }
+            if(scopedData[i].had_covid == true) {
+                document.querySelector(`.covid-pos-${i}`).innerHTML = 
+                `
+                <input class="radiobtn" type="radio" name="covid" value="yes">
+                ${checkmark.outerHTML}
+                <label for="covid">Yes</label>
+                `;
+                document.querySelector(`.covdiv-${i}`).innerHTML = 
+                `
+                <div class="input-wrapper">
+                    <p>When did you have covid 19?</p>
+                    <input type="text" name="covid-date" placeholder="${scopedData[i].had_covid_at}">
+                </div>
+                `;
+            } else {
+                document.querySelector(`.covid-neg-${i}`).innerHTML = 
+                `
+                <input class="radiobtn" type="radio" name="covid" value="no">
+                ${checkmark.outerHTML}
+                <label for="covid">No</label>
+                `;
+            }
+            if(scopedData[i].vaccinated == true) {
+                document.querySelector(`.vacc-pos-${i}`).innerHTML = 
+                `
+                <input class="radiobtn" type="radio" name="vaccine" value="yes">
+                ${checkmark.outerHTML}
+                <label for="vaccine">Yes</label>
+                `;
+                document.querySelector(`.vacdiv-${i}`).innerHTML = 
+                `
+                <div class="input-wrapper">
+                    <p>When did you get covid vaccine?</p>
+                    <input type="text" name="covid-date" placeholder="${scopedData[i].vaccinated_at}">
+                </div>
+                `;
+            } else {
+                document.querySelector(`.vacc-neg-${i}`).innerHTML = 
+                `
+                <input class="radiobtn" type="radio" name="vaccine" value="no">
+                ${checkmark.outerHTML}
+                <label for="vaccine">No</label>
+                `;
+            }
+            if(scopedData[i].will_organize_devtalk == true) {
+                document.querySelector(`.devtalks-pos-${i}`).innerHTML = 
+                `
+                <input class="devtalks radiobtn" type="radio" name="devtalks" value="yes">
+                ${checkmark.outerHTML}
+                <label for="devtalks">Yes</label>
+                `;
+                document.querySelector(`.devtalk-div-${i}`).innerHTML = 
+                `
+                <div class="textarea-wrapper">
+                    <p>What would you speak about at Devtalk?</p>
+                    <textarea name="devtalks textarea">${scopedData[i].devtalk_topic}</textarea>
+                </div>
+                `;
+            } else {
+                document.querySelector(`.devtalks-neg-${i}`).innerHTML = 
+                `
+                <input class="devtalks radiobtn" type="radio" name="devtalks" value="no">
+                ${checkmark.outerHTML}
+                <label for="devtalks">No</label>
+                `;
+            }
         });
     });
 }

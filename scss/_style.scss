@@ -2,9 +2,10 @@
 @import "./variables";
 
 body {
-    height: 100vh;
+    height: 100%;
     background: url(../media/png/stars.png), $primary-bg;
     background-position: center;
+    overflow: hidden;
 }
 
 .home-view {
@@ -59,231 +60,249 @@ body {
     }
 }
 
-.form-wrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    .form-display {
-        width: 50%;
-        h1 {
-            margin: 0;
-            text-align: center;
-            font-size: 4rem;
-            line-height: 4.5rem;
-            color: $redberry-red;
-            font-family: 'Rowdies', cursive;
-            margin: 6.6rem 6.5rem;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            max-width: 455px;
-            margin: 0 auto;
-            #exp {
-                padding: 1rem 10.2rem 0.8rem 3.5rem;
-            }
-            .default-button {
-                font-size: .75rem;
-                line-height: .9rem;
-                font-family: 'Montserrat', sans-serif;
-                padding: .5rem .2rem;
-                color: $primary-white;
-                background-color: $redberry-red;
-            }
-            #toLangList {
-                pointer-events: none;
-            }
-            input {
-                accent-color: $redberry-red;
-                width: 455px;
-                max-width: 100%;
-                border: 1px $primary-stroke solid;
-                padding: 1rem 12.6rem .8rem 3.5rem;
-                margin: 1.063rem 0;
-            }
-            select {
-                width: 455px;
-                max-width: 100%;
-                border: 1px $primary-stroke solid;
-                padding: 1rem 12.6rem .8rem 3.5rem;
-                margin: 1.063rem 0;
-                appearance:none;
-                background: url(../media/svg/Vector.svg) no-repeat 97% 50%;
-                outline: none;
-                option {
-                    color: $redberry-red;
-                }
-                option:disabled {
-                    color: #0000004b;
-                }
-            }
-            #number {
-                width: 455px;
-                max-width: 100%;
-                position: relative;
-                input {
-                    border: 1px $primary-stroke solid;
-                    padding: 1rem 12.6rem .8rem 3.5rem;
-                    margin: 1.5rem 0;
-                }
-                span {
-                    position: absolute;
-                    top: 53.5%;
-                    left: 3%;
-                    transform: translate(-3%, -53.5%);
-                }
-            }
-            ::placeholder { 
-                font-family: 'Montserrat', sans-serif;
-                color: $primary-grey;
-                font-style: italic;
-                opacity: 1; 
-            }
-            input::-webkit-outer-spin-button,
-            input::-webkit-inner-spin-button {
-                -webkit-appearance: none;
+.form-section {
+    .form-wrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        .form-display {
+            width: 50%;
+            overflow-y: auto;
+            height: 100vh;
+            h1 {
                 margin: 0;
+                text-align: center;
+                font-size: 4rem;
+                line-height: 4.5rem;
+                color: $redberry-red;
+                font-family: 'Rowdies', cursive;
+                margin: 6.6rem 6.5rem;
             }
-            .radio-box {
-                font-family: 'Montserrat', sans-serif;
-                color: $primary-black;
-                margin-top: 1.28rem;
-                .radio-box:nth-child(1) {
-                    margin-top: unset;
+            form {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                max-width: 455px;
+                margin: 0 auto;
+                #exp {
+                    padding: 1rem 10.2rem 0.8rem 3.5rem;
                 }
-                p {
-                    margin: 0;
-                    font-size: 1.125rem;
+                .default-button {
+                    font-size: .75rem;
+                    line-height: .9rem;
+                    font-family: 'Montserrat', sans-serif;
+                    padding: .5rem .2rem;
+                    color: $primary-white;
+                    background-color: $redberry-red;
+                }
+                #toLangList {
+                    pointer-events: none;
                 }
                 input {
-                    width: unset;
-                    max-width: unset;
-                    padding: unset;
-                    margin: .81rem 0;
-                }
-                input[type=date], input[type=text] {
+                    accent-color: $redberry-red;
                     width: 455px;
                     max-width: 100%;
                     border: 1px $primary-stroke solid;
-                    padding: .875rem 1.37rem;
-                    position: relative;
+                    padding: 1rem 12.6rem .8rem 3.5rem;
+                    margin: 1.063rem 0;
                 }
-                input[type=text], input[type=date] {
-                    background: url(../media/svg/calendar.svg) no-repeat 95% 50%;
-                }
-                ::-webkit-calendar-picker-indicator {
-                    color: transparent;
-                    background: none;
-                    z-index: 1;
-                }
-                p {
-                    white-space: nowrap;
-                    font-size: 1.125rem;
-                    font-family: 'Montserrat', sans-serif;
-                }
-                textarea {
-                    font-family: 'Montserrat', sans-serif;
-                    margin-top: 1.5rem;
-                    width: 535px;
-                    height: 122px;
+                select {
+                    width: 455px;
                     max-width: 100%;
-                    display: block;
-                    resize: none;
                     border: 1px $primary-stroke solid;
-                    padding: 1.5rem;
+                    padding: 1rem 12.6rem .8rem 3.5rem;
+                    margin: 1.063rem 0;
+                    appearance:none;
+                    background: url(../media/svg/Vector.svg) no-repeat 97% 50%;
+                    outline: none;
+                    option {
+                        color: $redberry-red;
+                    }
+                    option:disabled {
+                        color: #0000004b;
+                    }
+                }
+                #number {
+                    width: 455px;
+                    max-width: 100%;
+                    position: relative;
+                    input {
+                        border: 1px $primary-stroke solid;
+                        padding: 1rem 12.6rem .8rem 3.5rem;
+                        margin: 1.5rem 0;
+                    }
+                    span {
+                        position: absolute;
+                        top: 53.5%;
+                        left: 3%;
+                        transform: translate(-3%, -53.5%);
+                    }
+                }
+                ::placeholder { 
+                    font-family: 'Montserrat', sans-serif;
+                    color: $primary-grey;
+                    font-style: italic;
+                    opacity: 1; 
+                }
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+                .radio-box {
+                    font-family: 'Montserrat', sans-serif;
+                    color: $primary-black;
+                    margin-top: 1.28rem;
+                    .radio-box:nth-child(1) {
+                        margin-top: unset;
+                    }
+                    p {
+                        margin: 0;
+                        font-size: 1.125rem;
+                    }
+                    input {
+                        width: unset;
+                        max-width: unset;
+                        padding: unset;
+                        margin: .81rem 0;
+                    }
+                    input[type=date], input[type=text] {
+                        width: 455px;
+                        max-width: 100%;
+                        border: 1px $primary-stroke solid;
+                        padding: .875rem 1.37rem;
+                        position: relative;
+                    }
+                    input[type=text], input[type=date] {
+                        background: url(../media/svg/calendar.svg) no-repeat 95% 50%;
+                    }
+                    ::-webkit-calendar-picker-indicator {
+                        color: transparent;
+                        background: none;
+                        z-index: 1;
+                    }
+                    p {
+                        white-space: nowrap;
+                        font-size: 1.125rem;
+                        font-family: 'Montserrat', sans-serif;
+                    }
+                    textarea {
+                        font-family: 'Montserrat', sans-serif;
+                        margin-top: 1.5rem;
+                        width: 535px;
+                        height: 122px;
+                        max-width: 100%;
+                        display: block;
+                        resize: none;
+                        border: 1px $primary-stroke solid;
+                        padding: 1.5rem;
+                    }
                 }
             }
-        }
-        .langlist-wrapper {
-            margin-top: 3rem;
-            display: flex;
-            flex-direction: column;
-            .langlist-box {
-                width: 455px;
-                max-width: 100%;
-                border: 1px $primary-stroke solid;
+            .langlist-wrapper {
+                margin-top: 3rem;
                 display: flex;
-                padding: .875rem;
-                justify-content: space-between;
+                flex-direction: column;
+                .langlist-box {
+                    width: 455px;
+                    max-width: 100%;
+                    border: 1px $primary-stroke solid;
+                    display: flex;
+                    padding: .875rem;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin: .5rem auto;
+                    font-style: italic;
+                    font-family: 'Montserrat', sans-serif;
+                    color: $primary-grey;
+                    font-size: .875rem;
+                    line-height: 1rem;
+                    .experience {
+                        margin-right: 6.5rem;
+                    }
+                    .removeLang {
+                        cursor: pointer;
+                    }
+                }
+            }
+            .skill-select {
+                align-items: flex-end;
+            }
+            .pagination-parent {
+                display: flex;
                 align-items: center;
-                margin: .5rem auto;
-                font-style: italic;
-                font-family: 'Montserrat', sans-serif;
-                color: $primary-grey;
-                font-size: .875rem;
-                line-height: 1rem;
-                .experience {
-                    margin-right: 6.5rem;
-                }
-                .removeLang {
+                margin: 9.4rem auto 0 auto;
+                width: 230px;
+                .page-dot {
                     cursor: pointer;
+                    width: 19px;
+                    height: 19px;
+                    border-radius: 50%;
+                    opacity: .1;
+                    margin: 0 7.5px;
+                    background-color: $redberry-red;
+                }
+                .active {
+                    background-color: $redberry-red;
+                    opacity: 1;
+                }
+                #prev {
+                    cursor: pointer;
+                    margin-right: 10.5px;
+                }
+                #next {
+                    cursor: pointer;
+                    transform: scaleX(-1);
+                    margin-left: 10.5px;
                 }
             }
         }
-        .skill-select {
-            align-items: flex-end;
-        }
-        .pagination-parent {
-            display: flex;
-            align-items: center;
-            margin: 9.4rem auto 0 auto;
-            width: 230px;
-            .page-dot {
-                cursor: pointer;
-                width: 19px;
-                height: 19px;
-                border-radius: 50%;
-                opacity: .1;
-                margin: 0 7.5px;
-                background-color: $redberry-red;
+        .about-display {
+            width: 50%;
+            height: 100vh;
+            background: $primary-bg;
+            h1 {
+                margin: 0;
+                text-align: left;
+                font-size: 4rem;
+                line-height: 4.5rem;
+                color: $redberry-red;
+                font-family: 'Rowdies', cursive;
+                margin: 8.2rem auto;
+                max-width: 705px;
+                white-space: nowrap;
             }
-            .active {
-                background-color: $redberry-red;
-                opacity: 1;
-            }
-            #prev {
-                cursor: pointer;
-                margin-right: 10.5px;
-            }
-            #next {
-                cursor: pointer;
-                transform: scaleX(-1);
-                margin-left: 10.5px;
+            p {
+                margin: 0 auto;
+                font-size: 1.5rem;
+                line-height: 3rem;
+                color: $primary-white;
+                font-family: 'Montserrat', sans-serif;
+                max-width: 705px;
             }
         }
-    }
-    .about-display {
-        width: 50%;
-        height: 100vh;
-        background: $primary-bg;
-        h1 {
-            margin: 0;
-            text-align: left;
-            font-size: 4rem;
-            line-height: 4.5rem;
+        .err-text {
+            margin-left: 3.5rem;
             color: $redberry-red;
-            font-family: 'Rowdies', cursive;
-            margin: 8.2rem auto;
-            max-width: 705px;
-            white-space: nowrap;
-        }
-        p {
-            margin: 0 auto;
-            font-size: 1.5rem;
-            line-height: 3rem;
-            color: $primary-white;
+            font-size: .69rem;
+            line-height: .8rem;
+            font-style: italic;
             font-family: 'Montserrat', sans-serif;
-            max-width: 705px;
         }
     }
-    .err-text {
-        margin-left: 3.5rem;
-        color: $redberry-red;
-        font-size: .69rem;
-        line-height: .8rem;
-        font-style: italic;
-        font-family: 'Montserrat', sans-serif;
+    .number-popup {
+        position: absolute;
+        background-color: $primary-white;
+        border-radius: .7rem;
+        width: 300px;
+        max-width: 100%;
+        padding: .5rem;
+        text-align: center;
+        box-shadow: 0px 3px 5px #00000025;
+        animation: slideup .3s forwards;
+        span {
+            color: #444444;
+        }
     }
 }
 
@@ -352,6 +371,9 @@ body {
             }
             path {
                 fill: $primary-white;
+            }
+            .active-svg {
+                transform: rotate(180deg);
             }
         }
         .app-body {
@@ -498,4 +520,12 @@ body {
 
 .hidden {
     display: none;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: $redberry-red;
+    border-radius: 10px;
 }
