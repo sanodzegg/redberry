@@ -1,5 +1,5 @@
 // api
-const TOKEN = '2b1386d4-06ae-4825-81fe-3f2869760ced';
+const TOKEN = '3b4009df-7f69-4598-9f2c-f766d7dc2c9a';
 
 // regex
 const mail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         displaybox[0].classList.remove('hidden');
     }
 
+    // adds dashes between number characters
     document.getElementById('number').addEventListener('keyup', function() {
         let node = this.childNodes[3];
         try {
@@ -75,9 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 2500);
         }
     });
+    getSkills(selectors[0]); //fetch skills
 
-    getSkills(selectors[0]);
-
+    // global validator
     const validator = (errobj, value) => {
         if(Object.keys(errobj).length == value) {
             dotbox[count+1].classList.add('available');
@@ -109,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const addedSkills = document.querySelectorAll('.langName');
         const options = document.querySelectorAll('option');
 
+        // so that user can't choose single skill twice or more
         for(let i = 0; i < options.length; i++) {
             addedSkills.forEach(e => {
                 if(e.innerText == options[i].innerText) {
@@ -117,6 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }
+        // so that user can remove selected skill
         removers.forEach(e => {
             e.addEventListener('click', function() {
                 for(let i = 0; i < options.length; i++) {
@@ -137,7 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let error_desc = document.createElement('span');
     error_desc.classList.add('err-text');
-
     // validation
     coordinationVal.forEach(e => {
         coord_err.textval = false;
@@ -296,7 +298,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             } else {
                                 covid_err.coviddate = false;
                                 delete data.had_covid_at;
-                                // do your validation magic
                                 dateInputs[0].style.border = '1px #FE3B1F solid';
                                 error_desc.innerText = '* date is required';
                                 insertAfter(dateInputs[0], error_desc);
@@ -326,7 +327,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             } else {
                                 covid_err.vaccdate = false;
                                 delete data.vaccinated_at;
-                                // do your validation magic
                                 dateInputs[1].style.border = '1px #FE3B1F solid';
                                 error_desc.innerText = '* date is required';
                                 insertAfter(dateInputs[1], error_desc);
@@ -397,6 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
+    // pagination starts here
     dotbox.forEach((e, i) => {
         e.addEventListener('click', () => {
             if(e.classList.contains('available')) {
@@ -454,6 +455,9 @@ document.addEventListener("DOMContentLoaded", () => {
             document.body.style.background = '$primary-bg';
         }
     });
+    // pagination ends here
+
+    // submit event that mainly converts skills array into skill data that we get globally
     submit.addEventListener('click', () => {
         let names = document.querySelectorAll('.langName');
         let exp = document.querySelectorAll('.experience');
@@ -478,11 +482,14 @@ document.addEventListener("DOMContentLoaded", () => {
             location.reload();
         }, 3000);
     });
+    
+    // simply go back
     back.addEventListener('click', () => {
         document.querySelector('.submit-section').classList.add('hidden');
         document.querySelector('.form-section').classList.remove('hidden');
     });
 
+    // simple listener for whole innerHTML function
     getdata.addEventListener('click', () => {
         document.querySelector('.home-view').classList.add('hidden');
         document.querySelector('.submitted-section').classList.remove('hidden');
@@ -492,6 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+// we get skill ids and titles from here
 const getSkills = async (node) => {
     let res = await fetch('https://bootcamp-2022.devtest.ge/api/skills', {
         method: 'GET',
@@ -510,6 +518,7 @@ const getSkills = async (node) => {
     })
 }
 
+// we send data to the api from here
 const sendData = () => {
     fetch('https://bootcamp-2022.devtest.ge/api/application', {
         method: 'POST',
@@ -521,6 +530,7 @@ const sendData = () => {
     })
 }
 
+// we get our data back from here
 const getData = async () => {
     let scopedData = [];
     let res = await fetch(`https://bootcamp-2022.devtest.ge/api/applications?token=${TOKEN}`);
@@ -791,6 +801,7 @@ const getData = async () => {
     });
 }
 
+// just a handy little function that puts new element after the old(already existent) one
 const insertAfter = (referenceNode, newNode) => {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
